@@ -7963,7 +7963,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577415448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.84, y: 1.17, z: 9.023}
+  m_LocalPosition: {x: -4.55, y: 1.17, z: -6.4}
   m_LocalScale: {x: 0.98925, y: 0.8947074, z: 0.98925}
   m_Children:
   - {fileID: 636598244}
@@ -8791,7 +8791,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659665672}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 17.689999, y: -22.935757, z: 30.689999}
+  m_LocalPosition: {x: -2.2, y: -22.935757, z: 18.23}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 39967508}
@@ -11729,6 +11729,7 @@ GameObject:
   - component: {fileID: 1978112682}
   - component: {fileID: 1978112681}
   - component: {fileID: 1978112687}
+  - component: {fileID: 1978112688}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -11749,7 +11750,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1904478804}
-  lookRadius: 8
   Projectile: {fileID: 1780171431378261920, guid: 606254a71083dce4abbf1b6b49c58f00,
     type: 3}
   EnemyProjectileContainer: {fileID: 1988361733}
@@ -11838,7 +11838,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978112680}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -11.14, y: 0.76, z: 0.59}
+  m_LocalPosition: {x: -11.14, y: 0.76, z: -3.27}
   m_LocalScale: {x: 0.98925, y: 0.8947074, z: 0.98925}
   m_Children:
   - {fileID: 497443916}
@@ -11870,6 +11870,21 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1978112688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978112680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856f965766b3995418a79ead8a3f8eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAngle: 360
+  heightMultiplayer: 1.5
+  lookRadius: 10
 --- !u!1 &1988361732
 GameObject:
   m_ObjectHideFlags: 0
@@ -12411,7 +12426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118272499}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.69, y: -22.935757, z: 33.69}
+  m_LocalPosition: {x: -7.31, y: -22.935757, z: 14.92}
   m_LocalScale: {x: 10, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 39967508}

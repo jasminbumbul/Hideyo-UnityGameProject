@@ -10,7 +10,7 @@ public class Enemy_atack : MonoBehaviour
     private Transform destination;
     private Transform target;
     private NavMeshAgent navMashAgent;
-    public float lookRadius = 10f;
+   // public float lookRadius = 10f; 
 
     //projectile settings
     public GameObject Projectile;
@@ -32,19 +32,20 @@ public class Enemy_atack : MonoBehaviour
     }
 
    
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, lookRadius);   // ovo sam zakomentariso jer se poziva u skripti enemy detection
+    //}
     void Update()
     {
-        float TargetDistance = Vector3.Distance(target.position, transform.position);
+       // float TargetDistance = Vector3.Distance(target.position, transform.position); // ne treba u ovoj skritpi, nalazi se sve vezano za udaljenost Targeta u skripti enemyDetection
         float DestinationDistance = Vector3.Distance(destination.position, transform.position);
       
-        if (TargetDistance <= lookRadius)
+        if (EnemyDetection.isDetected) // TargetDistance <= lookRadius prije je bio ovaj uslov, ali sada provjeravamo da li je varijabl isDetected true, glavna varijabla iz skripte enemyDetection
         {
             navMashAgent.SetDestination(target.position);
+
             FaceTrget();
             FireProjectile();
         }
