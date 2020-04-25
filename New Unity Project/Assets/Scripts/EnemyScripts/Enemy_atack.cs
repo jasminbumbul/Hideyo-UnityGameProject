@@ -42,7 +42,7 @@ public class Enemy_atack : MonoBehaviour
        // float TargetDistance = Vector3.Distance(target.position, transform.position); // ne treba u ovoj skritpi, nalazi se sve vezano za udaljenost Targeta u skripti enemyDetection
         float DestinationDistance = Vector3.Distance(destination.position, transform.position);
       
-        if (EnemyDetection.isDetected) // TargetDistance <= lookRadius prije je bio ovaj uslov, ali sada provjeravamo da li je varijabl isDetected true, glavna varijabla iz skripte enemyDetection
+        if (EnemyDetection.isDetected || NormalProjectileBehaviour.hit) // TargetDistance <= lookRadius prije je bio ovaj uslov, ali sada provjeravamo da li je varijabl isDetected true, glavna varijabla iz skripte enemyDetection
         {
             navMashAgent.SetDestination(target.position);
 
@@ -70,6 +70,7 @@ public class Enemy_atack : MonoBehaviour
         {
             NextFire = Time.time + FireRate;
             GameObject.Instantiate(Projectile, ProjectileSpawnPoint.position, Projectile.transform.rotation, EnemyProjectileContainer);
+
         }
     }
 

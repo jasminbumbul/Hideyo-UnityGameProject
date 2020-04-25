@@ -10,6 +10,7 @@ public class NormalProjectileBehaviour : MonoBehaviour
     [Tooltip("Projectile Speed")]
     private float TravelingSpeed;
     private GameObject test;
+    public static bool hit = false;
     Vector3 demo;
     void Start()
     {
@@ -27,6 +28,8 @@ public class NormalProjectileBehaviour : MonoBehaviour
         Destroy(this.gameObject);
         if (collision.gameObject.name == "Enemy")
         {
+            hit = true;
+            EnemyDetection.isDetected = true;
             EnemyHealth.Damage(20);
             if (EnemyHealth.getHealth() <= 0)
             {

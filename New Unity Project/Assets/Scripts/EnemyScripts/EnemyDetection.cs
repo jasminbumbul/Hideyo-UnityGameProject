@@ -20,6 +20,16 @@ public class EnemyDetection : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius); // ovo smo prebacili iz skripte nemy atack
 
+        Vector3 favline1 = Quaternion.AngleAxis(maxAngle, transform.up) * transform.forward * lookRadius;
+        Vector3 favline2 = Quaternion.AngleAxis(-maxAngle, transform.up) * transform.forward * lookRadius;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, favline1);
+        Gizmos.DrawRay(transform.position, favline2);
+
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawRay(transform.position, transform.forward * lookRadius);
+
     }
 
     public static bool inFOV(Transform CheckingObject, Transform player, float maxAngle, float maxRadious)
@@ -49,6 +59,7 @@ public class EnemyDetection : MonoBehaviour
     // varijablu heightMultiplayer sam pronaso u komentaru, neki link savjetovo 
     private void Update()
     {
+       
         isDetected = inFOV(transform, target, maxAngle, lookRadius);
     }
 }
