@@ -45,21 +45,20 @@ public class Enemy_atack : MonoBehaviour
         if (TargetDistance <= lookRadius)
         {
             navMashAgent.SetDestination(target.position);
+            FaceTrget();
             FireProjectile();
         }
         else
         {
             navMashAgent.SetDestination(destination.position);
-
         }
         //Debug.Log(("TargetDistance --> " + TargetDistance));
         //Debug.Log((" DestinationDistance --> " + DestinationDistance));
-        
+
         //treba poboljsati
-        if (DestinationDistance <13)
+        if (DestinationDistance < 13)
         {
             FireProjectile();
-            //FaceTrget();
 
         }
     }
