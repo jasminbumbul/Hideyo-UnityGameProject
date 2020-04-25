@@ -7,9 +7,9 @@ using UnityEngine.AI;
 public class Enemy_atack : MonoBehaviour
 {
     [SerializeField]
-    Transform destination;
-    Transform target;
-    NavMeshAgent navMashAgent;
+    private Transform destination;
+    private Transform target;
+    private NavMeshAgent navMashAgent;
     public float lookRadius = 10f;
 
     //projectile settings
@@ -39,23 +39,29 @@ public class Enemy_atack : MonoBehaviour
     }
     void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
+        float TargetDistance = Vector3.Distance(target.position, transform.position);
+        float DestinationDistance = Vector3.Distance(destination.position, transform.position);
+      
+        if (TargetDistance <= lookRadius)
         {
             navMashAgent.SetDestination(target.position);
             FireProjectile();
         }
-
-
-
-        if(distance<=navMashAgent.stoppingDistance)
+        else
         {
-            FaceTrget();
+            navMashAgent.SetDestination(destination.position);
+
         }
+        //Debug.Log(("TargetDistance --> " + TargetDistance));
+        //Debug.Log((" DestinationDistance --> " + DestinationDistance));
+        
+        //treba poboljsati
+        if (DestinationDistance <13)
+        {
+            FireProjectile();
+            //FaceTrget();
 
-     
-
-
+        }
     }
 
     private void FireProjectile()
@@ -69,6 +75,7 @@ public class Enemy_atack : MonoBehaviour
 
     private void FaceTrget()
     {
+       
 
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
