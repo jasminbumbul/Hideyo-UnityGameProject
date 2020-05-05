@@ -8,12 +8,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+           
         [Serializable]
         public class MovementSettings
         {
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
-            public float StrafeSpeed = 4.0f;    // Speed when walking sideways
+            public float StrafeSpeed = 1.0f;    // Speed when walking sideways
             public float RunMultiplier = 2.0f;   // Speed when sprinting
 	        public KeyCode RunKey = KeyCode.LeftShift;
             public float JumpForce = 30f;
@@ -46,7 +47,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
 	            if (Input.GetKey(RunKey))
 	            {
-		            CurrentTargetSpeed *= RunMultiplier;
+                    Debug.Log("IsRunning");
+                    animator.SetBool("IsRunning", true);
+                    CurrentTargetSpeed *= RunMultiplier;
 		            m_Running = true;
 	            }
 	            else
@@ -82,7 +85,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
 
-
+        private static Animator animator;
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
@@ -109,8 +112,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             get
             {
- #if !MOBILE_INPUT
-				return movementSettings.Running;
+                animator.SetBool("IsRunning", true);
+
+#if !MOBILE_INPUT
+                return movementSettings.Running;
 #else
 	            return false;
 #endif
@@ -118,24 +123,32 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
+
         private void Start()
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
-            mouseLook.Init (transform, cam.transform);
+            mouseLook.Init(transform, cam.transform);
+            animator = GetComponent<Animator>();
         }
-
 
         private void Update()
         {
             RotateView();
 
+            Animator animator = GetComponent<Animator>();
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
                 m_Jump = true;
             }
-        }
 
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                animator.SetBool("IsRunning", true);
+            }
+         
+            
+        }
 
         private void FixedUpdate()
         {
@@ -144,6 +157,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
             {
+                Animator animator = GetComponent<Animator>();
+                animator.SetBool("IsMoving", true);
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward*input.y + cam.transform.right*input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
