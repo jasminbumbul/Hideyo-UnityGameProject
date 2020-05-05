@@ -9,7 +9,7 @@ public class PlayerActions : MonoBehaviour
     public Transform BladeContainer;
     public Transform BladeSpawnPoint;
 
-    [Range(0, 1)]
+    [Range(0, 2)]
     public float ThrowRate;
     private float NextThrow = 0.0f;
 
