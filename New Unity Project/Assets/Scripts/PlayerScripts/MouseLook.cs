@@ -14,6 +14,7 @@ public class MouseLook : MonoBehaviour
     {
         //zakljucava kursor da ne izlazi van game view
         Cursor.lockState = CursorLockMode.Locked;
+
         Animator = GameObject.Find("HumanModel").GetComponent<Animator>();
     }
 
@@ -27,6 +28,11 @@ public class MouseLook : MonoBehaviour
         if (Animator.GetBool("IsRunning"))
         {
             xRotation = Mathf.Clamp(xRotation, -15f, 45f);
+        } 
+        else
+        if (Animator.GetBool("IsPunching"))
+        {
+            xRotation = Mathf.Clamp(xRotation, -50f, 80f);
         }
         else
         {

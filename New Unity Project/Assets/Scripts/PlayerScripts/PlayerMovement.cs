@@ -92,14 +92,6 @@ public class PlayerMovement : MonoBehaviour
         Velocity.y += Gravity * Time.deltaTime;
         CharacterController.Move(Velocity* Time.deltaTime);
 
-        //punch
-        if (Input.GetMouseButton(0))
-        {
-            Animator.SetBool("IsPunching", true);
-        }
-        else
-        {
-            Animator.SetBool("IsPunching", false);
-        }
+      
     }
 }
