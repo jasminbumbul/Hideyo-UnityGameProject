@@ -45,6 +45,7 @@ public class BladeBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         collided = true;
+        Debug.Log("collided with "+ collision.gameObject.name);
      
     }
 
