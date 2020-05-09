@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //brzine kretanja
-    public float ForwardSpeed = 7f;
-    public float BackwardSpeed = 3f;
-    public float SideSpeed = 3f;
+    public float ForwardSpeed = 0.0f;
+    public float BackwardSpeed = 0.0f;
+    public float SideSpeed = 0.0f;
 
     private CharacterController CharacterController;
 
@@ -46,23 +46,45 @@ public class PlayerMovement : MonoBehaviour
         //razlicite brzine za razlicite smjerove kretanja
         if (z > 0)
         {
+            this.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
             CharacterController.Move(Movement * ForwardSpeed * Time.deltaTime);
             Animator.SetBool("IsWalking", true);
         }
-        if (z<0)
+        if (z < 0)
         {
+            this.transform.localScale = new Vector3(0.7f, 0.7f, -0.7f);
             CharacterController.Move(Movement * BackwardSpeed * Time.deltaTime);
             Animator.SetBool("IsWalking", true);
         }
         if (z==0 && (x<0 || x>0))
         {
+            if (x > 0)
+            {
+                Animator.SetBool("IsWalkingSideRight", true);
+            }
+       
+            if (x < 0)
+            {
+                Animator.SetBool("IsWalkingSideLeft", true);
+            }
+       
+          
             CharacterController.Move(Movement * SideSpeed * Time.deltaTime);
-            Animator.SetBool("IsWalking", true);
         }
+        else
+        {
+        Animator.SetBool("IsWalkingSideRight", false);
+        Animator.SetBool("IsWalkingSideLeft", false);
+
+        }
+
+
         if (x==0 && z==0)
         {
             Animator.SetBool("IsWalking", false);
         }
+
+     
 
         //brzo trcanje na leftShift
         if (Input.GetAxis("FasterWalking")>0 && Animator.GetBool("IsWalking"))

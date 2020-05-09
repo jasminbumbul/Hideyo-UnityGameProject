@@ -9,100 +9,140 @@ public class PickUpSystem : MonoBehaviour
 {
     [SerializeField]
     private Camera Camera;
+    //[SerializeField]
+    //private Camera RayCamera;
     [SerializeField]
     private LayerMask LayerMask;
     [SerializeField]
     private float PickUpTime = 2f;
     [SerializeField]
-    private RectTransform PickUpImageRoot;
+    private RectTransform pickuptext;
     //[SerializeField]
     //private Image PickUpProgressImage;
-    [SerializeField]
-    private TextMeshProUGUI ItemNameText;
+    //[SerializeField]
+    //private TextMeshProUGUI ItemNameText;
 
-    private Item ItemBeingPickedUp;
+    private static Item ItemBeingPickedUp;
     private float CurrentPickupTimerElapsed;
 
+    [SerializeField] private UI_Inventory ui_Inventory;
+    private static Inventory inventory;
+    //[SerializeField] private UI_OrmarInventory ui_OrmarInventory;
+    //private static OrmarInventory ormarInventory;
+
+    //public GameObject OrmaricUI;
+
+    private void Awake()
+    {
+        inventory = new Inventory();
+        ui_Inventory.SetInventory(inventory);
+        //ormarInventory = new OrmarInventory();
+        //ui_OrmarInventory.SetInventory(ormarInventory);
+
+    }
 
     private void Update()
     {
         SelectItemBeingPickedUpFromRay();
-
         if (HasItemTargetted())
         {
-            PickUpImageRoot.gameObject.SetActive(true);
+            //if (ItemBeingPickedUp.gameObject.name != "ormaric")
+            //{
+                pickuptext.gameObject.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("pressed");
-                IncrementPickUpProgressAndTryComplete();
-            }
-            else
-            {
-                CurrentPickupTimerElapsed = 0f;
-            }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
 
-            //UpdatePickUpProgressImage();
+                    IncrementPickUpProgressAndTryComplete();
+                }
+                else
+                {
+                    CurrentPickupTimerElapsed = 0f;
+                }
+            //}
+            //else
+            //{
+            //    if (OrmaricUI.activeSelf)
+            //    {
+            //        OrmaricUI.gameObject.SetActive(false);
+            //        Cursor.lockState = CursorLockMode.Locked;
+
+            //    }
+            //    else
+            //    {
+            //        OrmaricUI.gameObject.SetActive(true);
+            //        Cursor.lockState = CursorLockMode.None;
+
+            //    }
+            //}
         }
         else
         {
-            PickUpImageRoot.gameObject.SetActive(false);
+            pickuptext.gameObject.SetActive(false);
             CurrentPickupTimerElapsed = 0f;
         }
     }
 
- 
+
 
     private void IncrementPickUpProgressAndTryComplete()
     {
         CurrentPickupTimerElapsed += Time.deltaTime;
-        Debug.Log(CurrentPickupTimerElapsed);
-        Debug.Log(PickUpTime);
-        if (CurrentPickupTimerElapsed>=PickUpTime)
+        if (CurrentPickupTimerElapsed >= PickUpTime)
         {
             MoveItemToInventory();
         }
     }
 
-    private void MoveItemToInventory()
+    public static void MoveItemToInventory(Item itemFromOrmar=null)
     {
-        Destroy(ItemBeingPickedUp.gameObject);
-        ItemBeingPickedUp = null;
+        //if (itemFromOrmar!=null)
+        //{
+        //    inventory.AddItem(itemFromOrmar);
+        //}
+        //else
+        //{
+            inventory.AddItem(ItemBeingPickedUp);
+            ItemBeingPickedUp.gameObject.SetActive(false);
+        //}
+
     }
+
 
     private bool HasItemTargetted()
     {
         return ItemBeingPickedUp != null;
     }
-    //private void UpdatePickUpProgressImage()
-    //{
-    //    float pct = CurrentPickupTimerElapsed / PickUpTime;
-    //    PickUpProgressImage.fillAmount = pct;
-    //}
 
     private void SelectItemBeingPickedUpFromRay()
     {
         Ray Ray = Camera.ViewportPointToRay(Vector3.one / 2f);
-        Debug.DrawRay(Ray.origin, Ray.direction * 5f, Color.red);
+
+        Debug.DrawRay(Ray.origin, Ray.direction * 10f, Color.red);
 
         RaycastHit HitInfo;
-        if (Physics.Raycast(Ray,out HitInfo,5f,LayerMask))
+
+        if (Physics.Raycast(Ray, out HitInfo, 20f, LayerMask))
         {
+          
             var HitItem = HitInfo.collider.GetComponent<Item>();
 
-            if (HitItem==null)
+            if (HitItem == null)
             {
                 ItemBeingPickedUp = null;
             }
-            else if (HitItem!=null && HitItem != ItemBeingPickedUp)
+            else if (HitItem != null && HitItem != ItemBeingPickedUp)
             {
                 ItemBeingPickedUp = HitItem;
-                ItemNameText.text = "Pickup " + ItemBeingPickedUp.gameObject.name;
+
             }
         }
         else
         {
             ItemBeingPickedUp = null;
         }
+    
+
+   
     }
 }

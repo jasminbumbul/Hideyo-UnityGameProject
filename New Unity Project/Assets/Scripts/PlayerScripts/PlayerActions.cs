@@ -14,15 +14,23 @@ public class PlayerActions : MonoBehaviour
     public float ThrowRate;
     private float NextThrow = 0.0f;
 
-    public GameObject KatanaClone;
-    private Transform StartKatanaTransform;
+
 
     float Timer = 0.0f;
+
+    public GameObject Inventory;
+
+    //private bool InventoryIsOpen = false;
+
+  
+
 
     private void Start()
     {
         Animator = GameObject.Find("HumanModel").GetComponent<Animator>();
-        StartKatanaTransform = KatanaClone.transform;
+        Inventory.gameObject.SetActive(false);
+
+        //StartKatanaTransform = KatanaClone.transform;
     }
     private void Update()
     {
@@ -90,14 +98,32 @@ public class PlayerActions : MonoBehaviour
             Animator.SetBool("SwordSlash", false);
         }
 
-        if (Input.GetMouseButtonDown(1) && Animator.GetBool("SwordOut"))
+        //if (Input.GetMouseButtonDown(1) && Animator.GetBool("SwordOut"))
+        //{
+        //    Animator.SetBool("IsDefending", true);
+        //}
+        //else
+        //{
+        //    Animator.SetBool("IsDefending", false);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Animator.SetBool("IsDefending", true);
+            if (Inventory.activeSelf)
+            {
+                Inventory.gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+
+            }
+            else
+            {
+                Inventory.gameObject.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+
+            }
         }
-        else
-        {
-            Animator.SetBool("IsDefending", false);
-        }
+       
+
 
 
 

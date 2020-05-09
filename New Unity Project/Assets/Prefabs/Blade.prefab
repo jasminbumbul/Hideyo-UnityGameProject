@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: -3224059429347760073}
   - component: {fileID: 8215600569353602968}
   - component: {fileID: -7166625961541148613}
-  - component: {fileID: 1923532335}
+  - component: {fileID: 2365903997403692091}
   m_Layer: 10
   m_Name: Blade
   m_TagString: Untagged
@@ -253,7 +253,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   skinWidth: 0.1
---- !u!114 &1923532335
+--- !u!114 &2365903997403692091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,6 +262,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8766302732808125498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6019eb0c8cf8d7429f9d8efae0e37b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 312e39f17a9fd0b41b83cdd12766e1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 1
+  Amount: 1

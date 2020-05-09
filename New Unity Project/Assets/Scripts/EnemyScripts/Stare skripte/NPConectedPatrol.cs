@@ -131,16 +131,15 @@ public class NPConectedPatrol : MonoBehaviour
     [SerializeField]
     float totalWaitTime = 3f;
 
-    bool traveling;
-    bool waiting;
+
     float waitTimer;
 
-    float x;
-    float y;
-    float z;
+    protected float x;
+    protected float y;
+    protected float z;
     public Transform[] points;
-    private int destPoint = 0;
-    private NavMeshAgent agent;
+    protected int destPoint = 0;
+    protected NavMeshAgent agent;
 
 
 
@@ -165,26 +164,27 @@ public class NPConectedPatrol : MonoBehaviour
     }
 
 
-    void GotoNextPoint()
+    virtual public void GotoNextPoint()
     {
         if (points.Length == 0)
             return;
         // Returns if no points have been set up
-        points[0].position = new Vector3(x, y, z - 14);
-        points[1].position = new Vector3(x + 10, y, z);
-        points[2].position = new Vector3(x, y, z + 6);
-        points[3].position = new Vector3(x+3, y, z + 3);
+        points[0].position = new Vector3(x, y, z);
+        points[1].position = new Vector3(x, y, z);
+        points[2].position = new Vector3(x, y, z);
 
         // Set the agent to go to the currently selected destination.
-
+        var temp = destPoint;
         agent.destination = points[destPoint].position;
 
         // Choose the next point in the array as the destination,
         // cycling to the start if necessary.
 
         destPoint = Random.Range(0, points.Length);
-    }
 
+
+
+    }
 
     void Update()
     {
@@ -194,9 +194,24 @@ public class NPConectedPatrol : MonoBehaviour
         {
 
 
-            GotoNextPoint();
+            //GotoNextPoint();
+            if (patrolWaiting)
+            {
+                waitTimer += Time.deltaTime;
+                agent.SetDestination(agent.transform.position);
+                if (waitTimer >= totalWaitTime)
+                {
+                    GotoNextPoint();
+                    waitTimer = 0;
+                }
+            }
+            else
+            {
+                GotoNextPoint();
+            }
 
         }
 
     }
+
 }
