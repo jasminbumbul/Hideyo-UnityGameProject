@@ -17,6 +17,7 @@ public class CameraFollow : MonoBehaviour
     public float SmoothY;
     private float RotX = 0.0f;
     private float RotY = 0.0f;
+    Animator animator;
 
     void Start()  
     {
@@ -24,6 +25,7 @@ public class CameraFollow : MonoBehaviour
         RotX = Rotation.x;
         RotY = Rotation.y;
         Cursor.lockState = CursorLockMode.Locked;
+        animator = GameObject.Find("HumanModel").GetComponent<Animator>();
     }
 
     void Update()
@@ -43,6 +45,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        
         CameraUpdater();
     }
 
@@ -51,7 +54,7 @@ public class CameraFollow : MonoBehaviour
         Transform Target = CameraFollowObject.transform;
         float Step = CameraMoveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
-
-        GameObject.Find("MainPlayer").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
+       // if (animator.GetBool("IsWalking")) ;
+            GameObject.Find("MainPlayer").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
     }
 }
