@@ -17,28 +17,13 @@ public class PickUpSystem : MonoBehaviour
     private float PickUpTime = 2f;
     [SerializeField]
     private RectTransform pickuptext;
-    //[SerializeField]
-    //private Image PickUpProgressImage;
-    //[SerializeField]
-    //private TextMeshProUGUI ItemNameText;
 
-    private static Item ItemBeingPickedUp;
+    private static ItemPickUp ItemBeingPickedUp;
     private float CurrentPickupTimerElapsed;
 
-    [SerializeField] private UI_Inventory ui_Inventory;
-    private static Inventory inventory;
-    //[SerializeField] private UI_OrmarInventory ui_OrmarInventory;
-    //private static OrmarInventory ormarInventory;
 
-    //public GameObject OrmaricUI;
-
-    private void Awake()
+    private void Start()
     {
-        inventory = new Inventory();
-        ui_Inventory.SetInventory(inventory);
-        //ormarInventory = new OrmarInventory();
-        //ui_OrmarInventory.SetInventory(ormarInventory);
-
     }
 
     private void Update()
@@ -94,7 +79,7 @@ public class PickUpSystem : MonoBehaviour
         }
     }
 
-    public static void MoveItemToInventory(Item itemFromOrmar=null)
+    public static void MoveItemToInventory()
     {
         //if (itemFromOrmar!=null)
         //{
@@ -102,8 +87,20 @@ public class PickUpSystem : MonoBehaviour
         //}
         //else
         //{
-            inventory.AddItem(ItemBeingPickedUp);
-            ItemBeingPickedUp.gameObject.SetActive(false);
+        //inventory.AddItem(ItemBeingPickedUp);
+        Item[] items = ItemAssets.instance.Items;
+
+        foreach (var item in items)
+        {
+            if (ItemBeingPickedUp.ItemName == item.ItemName)
+            {
+                Player.myInventory.addItem(new ItemStack(item, 1));
+         
+                break;
+            }
+        }
+
+        ItemBeingPickedUp.gameObject.SetActive(false);
         //}
 
     }
@@ -125,7 +122,7 @@ public class PickUpSystem : MonoBehaviour
         if (Physics.Raycast(Ray, out HitInfo, 20f, LayerMask))
         {
           
-            var HitItem = HitInfo.collider.GetComponent<Item>();
+            var HitItem = HitInfo.collider.GetComponent<ItemPickUp>();
 
             if (HitItem == null)
             {

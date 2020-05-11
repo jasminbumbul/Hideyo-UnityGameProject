@@ -54,7 +54,12 @@ public class CameraFollow : MonoBehaviour
         Transform Target = CameraFollowObject.transform;
         float Step = CameraMoveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
-       // if (animator.GetBool("IsWalking")) ;
-            GameObject.Find("MainPlayer").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
+        // if (animator.GetBool("IsWalking")) ;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        
+        GameObject.Find("MainPlayer").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
+
     }
 }

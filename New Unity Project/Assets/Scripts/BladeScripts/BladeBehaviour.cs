@@ -16,7 +16,9 @@ public class BladeBehaviour : MonoBehaviour
         CameraObject = GameObject.Find("MainCamera");
         CameraVector = CameraObject.transform.forward;
         Rigidbody = GetComponent<Rigidbody>();
+        gameObject.name = "Blade";
     }
+ 
     private void Update()
     {
         if (collided)
