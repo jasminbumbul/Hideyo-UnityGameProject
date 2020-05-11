@@ -5,14 +5,14 @@ using UnityEngine;
 public class EnemyDetection : MonoBehaviour
 {
     public float maxAngle; // ugao pod kojim te moze detektovati
-    private Transform target; // main tenk
+    public Transform target; // main tenk
     public float heightMultiplayer = 1.5f;
     [SerializeField]
     public float lookRadius = 10f;
     public static bool isDetected = false; // glavna varijabla, da li je detektovan ili nije
     private void Start()
     {
-        target = GameObject.FindWithTag("Player").transform; // postavimo target da je main tenk
+        // postavimo target da je main tenk
         // isInFov=true;
     }
     private void OnDrawGizmosSelected()
@@ -61,6 +61,10 @@ public class EnemyDetection : MonoBehaviour
     {
 
         isDetected = inFOV(transform, target, maxAngle, lookRadius);
+        if(isDetected)
+        {
+            Debug.Log(this.transform.gameObject.name);
+        }
       
     }
 }

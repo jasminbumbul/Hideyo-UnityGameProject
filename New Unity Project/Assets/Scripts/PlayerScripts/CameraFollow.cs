@@ -59,7 +59,7 @@ public class CameraFollow : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         
-        GameObject.Find("MainPlayer").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
+        //GameObject.Find("HumanModel").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);
 
     }
 }
