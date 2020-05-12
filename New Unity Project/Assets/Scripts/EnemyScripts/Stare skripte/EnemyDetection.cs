@@ -13,6 +13,7 @@ public class EnemyDetection : MonoBehaviour
     private void Start()
     {
         // postavimo target da je main tenk
+        
         // isInFov=true;
     }
     private void OnDrawGizmosSelected()

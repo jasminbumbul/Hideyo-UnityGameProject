@@ -90,25 +90,11 @@ public class Player : MonoBehaviour
                         NextThrow = Time.time + ThrowRate;
                         Invoke("SpawnBlade", 1);
                         item.decreaseAmount(1);
-                        //if (item.isEmpty())
-                        //{
-                        //    myInventory.getInventoryStacks().Remove(item);
-                        //}
-                        //if(Player.myInventory.getInventoryStacks().Count==0)
-                        //{
-                        //    Player.myInventory.getInventoryStacks().Remove(item);
-                        //}
-                        //Player.myInventory.removeItem(new ItemStack(item.item, 1));
-
-
                     }
                 }
             }
         }
-        //Debug.Log(tempFlag);   
 
-        int itemcount;
-        Debug.Log(postoji);
         foreach (var item in myInventory.getInventoryStacks())
         {
             postoji = false;
@@ -116,14 +102,12 @@ public class Player : MonoBehaviour
             {
                 if (item.item.name == "Katana")
                 {
-
                     postoji = true;
                     if (!vecDodano)
                     {
-
                         animator.SetBool("SwordOut", true);
                         vecDodano = true;
-                        GameObject.Instantiate(Katana, GameObject.Find("KatanaHolder").transform.position, GameObject.Find("KatanaHolder").transform.rotation, GameObject.Find("MiddleHand.R").transform);
+                        GameObject.Instantiate(Katana, GameObject.Find("KatanaHolder").transform.position, GameObject.Find("KatanaHolder").transform.rotation, GameObject.Find("MiddleHand.R_MP").transform);
                     }
                     break;
                 }
@@ -131,7 +115,6 @@ public class Player : MonoBehaviour
             }
 
         }
-        Debug.Log(postoji);
 
 
 
@@ -139,23 +122,21 @@ public class Player : MonoBehaviour
         {
             if (animator.GetBool("SwordOut"))
             {
-                if (GameObject.Find("Katana") != null)
+                animator.SetBool("SwordOut", false);
+                var children = new List<GameObject>();
+                foreach (Transform child in GameObject.Find("MiddleHand.R_MP").transform) children.Add(child.gameObject);
+                //children.ForEach(child => Destroy(child));
+                foreach (var child in children)
                 {
-                    animator.SetBool("SwordOut", false);
-                    var children = new List<GameObject>();
-                    foreach (Transform child in GameObject.Find("MiddleHand.R").transform) children.Add(child.gameObject);
-                    //children.ForEach(child => Destroy(child));
-                    foreach (var child in children)
+                    if (child.name == "Katana")
                     {
-                        if (child.name=="Katana")
-                        {
-                            Destroy(child);
-                        }
+                        Destroy(child);
                     }
-
-                    postoji = false;
-
                 }
+
+                postoji = false;
+                vecDodano = false;
+
             }
         }
 
@@ -173,6 +154,12 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("SwordSlash", false);
         }
+
+         if (Input.GetMouseButton(0) && !animator.GetBool("SwordOut"))
+        {
+            animator.SetTrigger("PunchTrigger");
+        }
+       
     }
 
     private void updateSelectedHotbarIndex(float direction)
