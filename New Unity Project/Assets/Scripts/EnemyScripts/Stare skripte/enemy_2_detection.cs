@@ -34,12 +34,13 @@ public class enemy_2_detection : MonoBehaviour
             {
                 navMeshAgent.speed = 5;
                 navMeshAgent.destination = player.position;
-                navMeshAgent.stoppingDistance = 3;
 
 
             }
             else
             {
+                navMeshAgent.stoppingDistance = 2;
+
                 animator.SetTrigger("IsAttacking");
             }
 
