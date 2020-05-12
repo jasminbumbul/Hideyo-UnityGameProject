@@ -5,13 +5,13 @@ using UnityEngine;
 public class test : MonoBehaviour
 {
     Vector3 velocity;
-    [SerializeField] private float movenetSpeed = 5f;
+    [SerializeField] private float movenetSpeed = 2f;
     private float currentSpeed = 0f;
     private float speedSmoothVelocity = 0f;
     private float speedSmoothTime = 0.1f;
     private float rotationSpeed = 0.1f;
-    private float gravity = 9.81f;
-    public float JumpHeight = 15f;
+    private float gravity = 3f;
+    public float JumpHeight = 6f;
 
 
     private Transform mainCameraTransform = null;
@@ -49,7 +49,7 @@ public class test : MonoBehaviour
         }
         if (desiredMoveDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed*3);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed);
 
         }
         float targetSpeed = movenetSpeed * movementInput.magnitude;
@@ -73,19 +73,16 @@ public class test : MonoBehaviour
         else
         {
             animator.SetBool("IsRunning", false);
-            movenetSpeed = 5f;
+            movenetSpeed = 2f;
         }
         if (controller.isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if (Input.GetButton("Jump") && controller.isGrounded)
         {
-            velocity.y = Mathf.Sqrt(JumpHeight*2 * -2f * gravity*Time.deltaTime);
+            velocity.y = Mathf.Sqrt(JumpHeight * -2f * gravity);
             animator.SetTrigger("JumpTrigger");
         }
-
-      
-   
     }
 }
