@@ -51,12 +51,21 @@ public class CameraFollow : MonoBehaviour
 
     private void CameraUpdater()
     {
-        Transform Target = CameraFollowObject.transform;
-        float Step = CameraMoveSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
-        // if (animator.GetBool("IsWalking")) ;
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        try
+        {
+            Transform Target = CameraFollowObject.transform;
+            float Step = CameraMoveSpeed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
+            // if (animator.GetBool("IsWalking")) ;
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+        }
+        catch (Exception)
+        {
+
+           
+        }
 
         
         //GameObject.Find("HumanModel").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);

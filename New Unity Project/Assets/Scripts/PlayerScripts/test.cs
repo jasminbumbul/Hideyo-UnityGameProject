@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    Vector3 velocity;
+   
     [SerializeField] private float movenetSpeed = 2f;
     private float currentSpeed = 0f;
     private float speedSmoothVelocity = 0f;
@@ -12,6 +12,7 @@ public class test : MonoBehaviour
     private float rotationSpeed = 0.1f;
     private float gravity = 3f;
     public float JumpHeight = 6f;
+    public bool isDefending = false;
 
 
     private Transform mainCameraTransform = null;
@@ -75,14 +76,25 @@ public class test : MonoBehaviour
             animator.SetBool("IsRunning", false);
             movenetSpeed = 2f;
         }
-        if (controller.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-        if (Input.GetButton("Jump") && controller.isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(JumpHeight * -2f * gravity);
-            animator.SetTrigger("JumpTrigger");
-        }
+        //if (controller.isGrounded && velocity.y < 0)
+        //{
+        //    velocity.y = -2f;
+        //}
+        //if (Input.GetButton("Jump") && controller.isGrounded)
+        //{
+        //    velocity.y = Mathf.Sqrt(JumpHeight * -2f * gravity);
+        //    animator.SetTrigger("JumpTrigger");
+        //}
+    //if(Input.GetKeyDown(KeyCode.Mouse1))
+    //    {
+    //        Debug.Log("odbrana");
+    //        animator.SetBool("IsDefending", true);
+    //    }
+    //    else
+    //    {
+    //        animator.SetBool("IsDefending", false);
+    //    }
+      
     }
+    
 }
