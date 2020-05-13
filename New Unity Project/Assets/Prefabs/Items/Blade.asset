@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Blade
   m_EditorClassIdentifier: 
   ItemName: Blade
-  ItemIcon: {fileID: 21300000, guid: 2a3fd0226d24f3e4e9cfc2ace3768c7f, type: 3}
+  ItemIcon: {fileID: -2678498615165238795, guid: 2a3fd0226d24f3e4e9cfc2ace3768c7f,
+    type: 3}
   maxStackSize: 10

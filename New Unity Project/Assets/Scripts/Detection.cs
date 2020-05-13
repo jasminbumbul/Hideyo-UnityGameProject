@@ -20,13 +20,10 @@ public class Detection : MonoBehaviour
                     if (PlayerAnimator.GetBool("IsDefending"))
                     {
                         this.gameObject.GetComponent<Health>().health -= 3;
-                        Debug.Log("-5");
                     }
                     else
                     {
                         this.gameObject.GetComponent<Health>().health -= 10;
-                        Debug.Log("-10");
-
                     }
                 }
             }
@@ -57,7 +54,27 @@ public class Detection : MonoBehaviour
             else
             {
                 this.gameObject.GetComponent<Health>().health -= 30;
-                Debug.Log(this.gameObject.name);
+            }
+        }
+
+        if (other.transform.gameObject.name == "FistHitTrigger")
+        {
+            if (this.gameObject.name == "HumanModel")
+            {
+                if (other.transform.gameObject.transform.root.name != "HumanModel")
+                {
+                     this.gameObject.GetComponent<Health>().health -= 5;
+                }
+            }
+            else
+            {
+                if (this.gameObject.tag == "Enemy")
+                {
+                    if (other.transform.gameObject.transform.root.tag != "Enemy")
+                    {
+                        this.gameObject.GetComponent<Health>().health -= 10;
+                    }
+                }
             }
         }
     }

@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
             if (this.transform.gameObject.name == "HumanModel")
             {
 
-               // Destroy(this.gameObject);
+               animator.SetBool("Death",true);
                 
                 StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
             }

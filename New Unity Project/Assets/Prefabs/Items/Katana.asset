@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Katana
   m_EditorClassIdentifier: 
   ItemName: Katana
-  ItemIcon: {fileID: 21300000, guid: 97faf29d52dabfb4dac6c2e1b79b765c, type: 3}
+  ItemIcon: {fileID: 4089796923838250065, guid: 97faf29d52dabfb4dac6c2e1b79b765c,
+    type: 3}
   maxStackSize: 1

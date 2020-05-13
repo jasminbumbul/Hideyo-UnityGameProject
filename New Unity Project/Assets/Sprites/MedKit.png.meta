@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f95c5f1af2254e0478babc0b7e9ea716
+guid: fceee79eeee6bbb4fa9a7e889e5afaf4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3338749442709606003
-    second: Coin_0
+      213: 1142586732419344882
+    second: MedKit_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coin_0
+      name: MedKit_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 26
-        width: 61
-        height: 48
+        x: 43
+        y: 33
+        width: 464
+        height: 316
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 826ab64606981d145a81ee6bea03f7c9
-      internalID: -3338749442709606003
+      spriteID: dd8ce403251d3984a827e8c3af475bc8
+      internalID: 1142586732419344882
       vertices: []
       indices: 
       edges: []

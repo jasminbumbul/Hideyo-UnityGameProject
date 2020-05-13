@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MedKit
   m_EditorClassIdentifier: 
   ItemName: MedKit
-  ItemIcon: {fileID: 0}
+  ItemIcon: {fileID: 1142586732419344882, guid: fceee79eeee6bbb4fa9a7e889e5afaf4,
+    type: 3}
   maxStackSize: 100
