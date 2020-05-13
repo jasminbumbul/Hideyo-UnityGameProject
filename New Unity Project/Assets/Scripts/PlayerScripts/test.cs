@@ -23,6 +23,7 @@ public class test : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         mainCameraTransform = Camera.main.transform;
+        this.transform.gameObject.GetComponent<SavingBetweenScenes>().enabled = false;
     }
 
     // Update is called once per frame

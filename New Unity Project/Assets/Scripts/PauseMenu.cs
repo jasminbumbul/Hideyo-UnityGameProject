@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
             }
         }
+        
     }
 
     public void Pause()
@@ -47,11 +48,19 @@ public class PauseMenu : MonoBehaviour
         StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex - 1));
 
     }
+    public  void LoadScene()
+    {
+        Time.timeScale = 1f;
+       
+
+        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
+
+    }
     public void Quit()
     {
         Application.Quit();
     }
-    IEnumerator nextLevel(int index)
+   public  IEnumerator nextLevel(int index)
     {
         transition.SetTrigger("start");
         yield return new WaitForSeconds(animationTime);

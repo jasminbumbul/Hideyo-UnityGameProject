@@ -6,11 +6,7 @@ public class Detection : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (this.transform.gameObject.name == "HumanModal" && Input.GetKeyDown(KeyCode.Mouse1))
-        {
-        }
-        else
-        {
+       
 
 
             if (other.transform.gameObject.name == "Sphere")
@@ -19,7 +15,7 @@ public class Detection : MonoBehaviour
                 this.gameObject.GetComponent<Health>().healt -= 20;
 
             }
-        }
+        
 
     }
     void Start()

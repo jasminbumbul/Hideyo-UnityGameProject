@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("sTART");
+        
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
 
         foreach (Item item in itemsToAdd)
