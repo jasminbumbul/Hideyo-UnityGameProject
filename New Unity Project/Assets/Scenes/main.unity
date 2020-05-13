@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.8263896, g: 0.53087366, b: 0.4503488, a: 1}
+  m_IndirectSpecularColor: {r: 0.8263899, g: 0.5308749, b: 0.45034713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3740,7 +3740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a53024072727a4f8a5fcc4db891bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropCanvas: {fileID: 0}
 --- !u!114 &1931055117 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2381123055643048383, guid: bd2a42f4dbcd3164c845c17bc4056015,
@@ -9553,7 +9552,6 @@ GameObject:
   - component: {fileID: 5321193782891692116}
   - component: {fileID: 5321193782891692117}
   - component: {fileID: 5321193782891692118}
-  - component: {fileID: 5321193782891692119}
   m_Layer: 0
   m_Name: HumanModel
   m_TagString: Player
@@ -9697,18 +9695,6 @@ MonoBehaviour:
   transition: {fileID: 3968373473505768908}
   dead: 0
   EnemysKatana: {fileID: 0}
---- !u!114 &5321193782891692119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5321193782891692110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7ae61f5828fdc44bb92fefb8aa548a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5398042302378970001
 GameObject:
   m_ObjectHideFlags: 0
