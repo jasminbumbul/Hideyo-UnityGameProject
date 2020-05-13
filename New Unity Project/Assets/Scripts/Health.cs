@@ -5,21 +5,32 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Health : MonoBehaviour
 {
-    public float healt;
+    public float health;
     [SerializeField]
 
-    public float Maxhealt;
-    public GameObject heatlBar;
+    public float Maxhealth;
+    public GameObject heatlhBar;
     public Slider slider;
     public Animator transition;
+    private Animator animator;
      float animationTime = 1f;
     public bool dead=false;
+    public static Health instance;
+    private Rigidbody rigidbody;
+    public GameObject EnemysKatana;
+    private enemy_2_detection skripta;
 
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
-        
-        healt = Maxhealt;
+        animator=this.GetComponent<Animator>();
+        rigidbody=this.GetComponent<Rigidbody>();
+        health = Maxhealth;
+        skripta=this.GetComponent<enemy_2_detection>();
 
         slider.value = CalculateHealth();
       
@@ -31,41 +42,38 @@ public class Health : MonoBehaviour
         slider.value = CalculateHealth();
 
 
-        if (healt < Maxhealt)
+        if (health < Maxhealth)
         {
-            heatlBar.SetActive(true);
+            heatlhBar.SetActive(true);
         }
-        if (healt <= 0)
+        if (health <= 0)
         {
-            if(this.transform.gameObject.name=="HumanModel")
+            if (this.transform.gameObject.name == "HumanModel")
             {
-             
+
                 Destroy(this.gameObject);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-               // StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
+                // StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
             }
             else
             {
-
-            Destroy(gameObject);
+                animator.SetBool("Death",true);
+                Destroy(EnemysKatana);
+                skripta.gameObject.SetActive(false);
             }
-            
-          
-            
-
         }
-        if(healt>Maxhealt)
+        if (health > Maxhealth)
         {
-            healt = Maxhealt;
+            health = Maxhealth;
         }
     }
     public float CalculateHealth()
     {
-        return healt / Maxhealt;
+        return health / Maxhealth;
     }
    public void IncreaseHelath(float health22)
     {
-        healt -= health22;
+        health -= health22;
     }
     public IEnumerator nextLevel(int index)
     {

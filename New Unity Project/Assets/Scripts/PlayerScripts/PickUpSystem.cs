@@ -9,8 +9,8 @@ public class PickUpSystem : MonoBehaviour
 {
     [SerializeField]
     private Camera Camera;
-    //[SerializeField]
-    //private Camera RayCamera;
+    [SerializeField]
+    private Camera RayCamera;
     [SerializeField]
     private LayerMask LayerMask;
     [SerializeField]
@@ -113,7 +113,7 @@ public class PickUpSystem : MonoBehaviour
 
     private void SelectItemBeingPickedUpFromRay()
     {
-        Ray Ray = Camera.ViewportPointToRay(Vector3.one / 2f);
+        Ray Ray = RayCamera.ViewportPointToRay(Vector3.one / 2f);
 
         Debug.DrawRay(Ray.origin, Ray.direction * 10f, Color.red);
 

@@ -18,13 +18,21 @@ public class Container
 
     public void addSlotToContainer(Inventory inventory, int slotID, float x, float y, int slotSize)
     {
-        GameObject spawnedSlot = Object.Instantiate(InventoryManager.INSTANCE.slotPrefab);
+        GameObject spawnedSlot;
+        if (x == -170 && y == 10)
+        {
+            spawnedSlot = Object.Instantiate(InventoryManager.INSTANCE.slotUnkManPrefab);
+        }
+        else
+        {
+            spawnedSlot = Object.Instantiate(InventoryManager.INSTANCE.slotPrefab);
+        }
         Slot slot = spawnedSlot.GetComponent<Slot>();
         RectTransform slotRT = slot.GetComponent<RectTransform>();
         slot.setSlot(inventory, slotID, this);
         spawnedSlot.transform.SetParent(spawnedContainerPrefab.transform);
         spawnedSlot.transform.SetAsFirstSibling();
-        slotRT.anchoredPosition = new Vector2(x,y);
+        slotRT.anchoredPosition = new Vector2(x, y);
         slotRT.sizeDelta = Vector2.one * slotSize;
         slotRT.localScale = Vector3.one;
         slots.Add(slot);

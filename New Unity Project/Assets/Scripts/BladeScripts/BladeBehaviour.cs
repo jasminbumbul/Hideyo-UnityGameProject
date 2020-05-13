@@ -13,7 +13,7 @@ public class BladeBehaviour : MonoBehaviour
     private Rigidbody Rigidbody;
     void Start()
     {
-        CameraObject = GameObject.Find("MainCamera");
+        CameraObject = GameObject.Find("BladeDir");
         CameraVector = CameraObject.transform.forward;
         Rigidbody = GetComponent<Rigidbody>();
         gameObject.name = "Blade";

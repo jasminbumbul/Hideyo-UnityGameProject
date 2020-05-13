@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     public GameObject slotPrefab;
+    public GameObject slotUnkManPrefab;
     public List<ContainerGetter> containers = new List<ContainerGetter>();
     public MonoBehaviour[] stuffToDisable;
     private Container currentOpenContainer;
@@ -35,17 +36,32 @@ public class InventoryManager : MonoBehaviour
     {
       
 
+        //if (hasInventoryOpen)
+        //{
+        //    if(Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        //openContainer(new ContainerPlayerHotbar(null, player.getInventory()));
+        //        closeContainer();
+        //        hasInventoryOpen = false;
+        //        foreach (MonoBehaviour obj in stuffToDisable)
+        //        {
+        //            obj.enabled = true;
+        //        }
+        //    }
+        //}
+    }
+
+    public void closeInventory()
+    {
         if (hasInventoryOpen)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
+
+            //openContainer(new ContainerPlayerHotbar(null, player.getInventory()));
+            closeContainer();
+            hasInventoryOpen = false;
+            foreach (MonoBehaviour obj in stuffToDisable)
             {
-                //openContainer(new ContainerPlayerHotbar(null, player.getInventory()));
-                closeContainer();
-                hasInventoryOpen = false;
-                foreach (MonoBehaviour obj in stuffToDisable)
-                {
-                    obj.enabled = true;
-                }
+                obj.enabled = true;
             }
         }
     }
@@ -80,7 +96,6 @@ public class InventoryManager : MonoBehaviour
 
     public void openContainer(Container container)
     {
-        Cursor.lockState = CursorLockMode.None;
         if (currentOpenContainer != null)
         {
             currentOpenContainer.closeContainer();
@@ -98,7 +113,6 @@ public class InventoryManager : MonoBehaviour
 
     public void closeContainer()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         if (currentOpenContainer != null)
         {
             currentOpenContainer.closeContainer();

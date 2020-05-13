@@ -9,8 +9,6 @@ public class CameraFollow : MonoBehaviour
     public GameObject CameraFollowObject;
     public float ClampAngle = 80.0f;
     public float InputSensitivity = 150.0f;
-    public GameObject CameraObject;
-    public GameObject PlayerObject;
     public float MouseX;
     public float MouseY;
     public float SmoothX;
@@ -24,7 +22,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 Rotation = transform.localRotation.eulerAngles;
         RotX = Rotation.x;
         RotY = Rotation.y;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
     }
 
@@ -51,21 +49,12 @@ public class CameraFollow : MonoBehaviour
 
     private void CameraUpdater()
     {
-        try
-        {
-            Transform Target = CameraFollowObject.transform;
-            float Step = CameraMoveSpeed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
-            // if (animator.GetBool("IsWalking")) ;
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
-
-        }
-        catch (Exception)
-        {
-
-           
-        }
+        Transform Target = CameraFollowObject.transform;
+        float Step = CameraMoveSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, Target.position, Step);
+        // if (animator.GetBool("IsWalking")) ;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
         
         //GameObject.Find("HumanModel").transform.rotation = Quaternion.Euler(0.0f, RotY, 0.0f);

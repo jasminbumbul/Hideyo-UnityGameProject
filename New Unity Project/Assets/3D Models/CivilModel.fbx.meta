@@ -1,41 +1,74 @@
 fileFormatVersion: 2
-guid: 06cfca5589a236144a88b61b2b755b11
+guid: f479e875fae68cb498f893a21f511840
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      74: 4523737202199915946
-    second: HumanArmature|Man_Clapping
+      74: 421296889344820519
+    second: Enemy_Jump
   - first:
-      74: -3916294550958455020
-    second: HumanArmature|Man_Death
+      74: -460990892843437373
+    second: Enemy_Idle_With_Sword
   - first:
-      74: 8106746524365628829
-    second: HumanArmature|Man_Idle
+      74: 4852780435650410110
+    second: EnemyArmature|Enemy_Clapping
   - first:
-      74: -6398272582352398571
-    second: HumanArmature|Man_Jump
+      74: -6877659614649713120
+    second: EnemyArmature|Enemy_Death
   - first:
-      74: 4607071556537973139
-    second: HumanArmature|Man_Punch
+      74: -3134213879061216394
+    second: EnemyArmature|Enemy_Defending
   - first:
-      74: 7354251634412414196
-    second: HumanArmature|Man_Run
+      74: 3125271449890618272
+    second: EnemyArmature|Enemy_Idle_With_Sword
   - first:
-      74: 1443013137757961451
-    second: HumanArmature|Man_RunningJump
+      74: -8115476255215300196
+    second: EnemyArmature|Enemy_Idle_Without_Sword.
   - first:
-      74: -6153676157489181926
-    second: HumanArmature|Man_Sitting
+      74: 4604873442578972830
+    second: EnemyArmature|Enemy_Jump
   - first:
-      74: -9164212156404960148
-    second: HumanArmature|Man_Standing
+      74: -8872372745021274233
+    second: EnemyArmature|Enemy_PickUp
   - first:
-      74: 3655391794997471651
-    second: HumanArmature|Man_SwordSlash
+      74: 5995696599537744985
+    second: EnemyArmature|Enemy_Punch
   - first:
-      74: 1555546630585696353
-    second: HumanArmature|Man_Walk
+      74: 3483435572900079853
+    second: EnemyArmature|Enemy_Run
+  - first:
+      74: 3664023015544412588
+    second: EnemyArmature|Enemy_RunningJump
+  - first:
+      74: 5341422982775408854
+    second: EnemyArmature|Enemy_Sitting
+  - first:
+      74: -2190572901689416608
+    second: EnemyArmature|Enemy_Slow_Left
+  - first:
+      74: 3926713425239464465
+    second: EnemyArmature|Enemy_Slow_Left.001
+  - first:
+      74: 999523223580665948
+    second: EnemyArmature|Enemy_Slow_Right
+  - first:
+      74: 5414458134668618993
+    second: EnemyArmature|Enemy_Standing
+  - first:
+      74: -7822816977706340429
+    second: EnemyArmature|Enemy_SwordOut
+  - first:
+      74: -2058709112786713048
+    second: EnemyArmature|Enemy_SwordOut.001
+  - first:
+      74: 5465763755864756959
+    second: EnemyArmature|Enemy_SwordSlash
+  - first:
+      74: -4219578806044466599
+    second: EnemyArmature|Enemy_ThrowsBlade
+  - first:
+      74: 1759897145967487633
+    second: EnemyArmature|Enemy_Walk
   externalObjects: {}
   materials:
     importMaterials: 1

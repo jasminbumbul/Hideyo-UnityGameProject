@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +23,14 @@ public class Player : MonoBehaviour
     private float NextThrow = 0.0f;
 
     public GameObject Katana;
-    bool tempFlag = false;
     bool vecDodano = false;
     bool postoji = false;
+
+    public GameObject Human;
+    private DialogueTrigger dialogueTrigger;
+    private bool triggered = false;
+
+    bool hasCoins = false;
 
     private void Awake()
     {
@@ -43,9 +49,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("sTART");
-        
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
+        dialogueTrigger=GameObject.Find("Trader").GetComponent<DialogueTrigger>();
+
 
         foreach (Item item in itemsToAdd)
         {
@@ -63,8 +69,11 @@ public class Player : MonoBehaviour
         {
             if (!InventoryManager.INSTANCE.hasInventoryCurrentlyOpen())
             {
-                Cursor.lockState = CursorLockMode.None;
                 InventoryManager.INSTANCE.openContainer(new ContainerPlayerInventory(null, myInventory));
+            }
+            else
+            {
+                InventoryManager.INSTANCE.closeInventory();
             }
         }
 
@@ -86,12 +95,16 @@ public class Player : MonoBehaviour
             {
                 foreach (var item in myInventory.getInventoryStacks())
                 {
-                    if (item.item.name == "Blade" && item.count > 0)
+                    if (item.item != null)
                     {
-                        animator.SetTrigger("BladeTrigger");
-                        NextThrow = Time.time + ThrowRate;
-                        Invoke("SpawnBlade", 1);
-                        item.decreaseAmount(1);
+
+                        if (item.item.name == "Blade" && item.count > 0)
+                        {
+                            animator.SetTrigger("BladeTrigger");
+                            NextThrow = Time.time + ThrowRate;
+                            Invoke("SpawnBlade", 1);
+                            item.decreaseAmount(1);
+                        }
                     }
                 }
             }
@@ -109,7 +122,7 @@ public class Player : MonoBehaviour
                     {
                         animator.SetBool("SwordOut", true);
                         vecDodano = true;
-                        GameObject.Instantiate(Katana, GameObject.Find("KatanaHolder").transform.position, GameObject.Find("KatanaHolder").transform.rotation, GameObject.Find("MiddleHand.R_MP").transform);
+                        GameObject.Instantiate(Katana, GameObject.Find("KatanaHolder").transform.position, GameObject.Find("KatanaHolder").transform.rotation, GameObject.FindWithTag("Zglob").transform);
                     }
                     break;
                 }
@@ -142,33 +155,99 @@ public class Player : MonoBehaviour
             }
         }
 
+        //koristenje medkita
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            foreach (var item in myInventory.getInventoryStacks())
+            {
+                if (item.item != null)
+                {
+                    if (item.item.name == "MedKit" && item.count > 0)
+                    {
+                        item.decreaseAmount(1);
+                        Health.instance.health+=50;
+                    }
+                }
+            }
 
-
-
+        }
 
 
 
         if (Input.GetMouseButton(0) && animator.GetBool("SwordOut"))
         {
-            animator.SetBool("SwordSlash", true);
-        }
-        else
-        {
-            animator.SetBool("SwordSlash", false);
+            animator.SetTrigger("SwordTrigger");
         }
 
-         if (Input.GetMouseButton(0) && !animator.GetBool("SwordOut"))
+
+        if (Input.GetMouseButton(0) && !animator.GetBool("SwordOut"))
         {
             animator.SetTrigger("PunchTrigger");
         }
-       
+
+        if (Input.GetMouseButton(1) && animator.GetBool("SwordOut"))
+        {
+            animator.SetBool("IsDefending",true);
+        }
+        else{
+            animator.SetBool("IsDefending",false);
+        }
+
+
+        //interaction with humans
+        float distanceBetwenPlayerAndHuman=Vector3.Distance(this.transform.position,Human.transform.position);
+
+        if (distanceBetwenPlayerAndHuman < 3 && triggered == false)
+        {
+            if (hasCoins)
+            {
+                dialogueTrigger.TriggerDialogue(hasCoins);
+                triggered = true ;
+            }
+            else
+            {
+                dialogueTrigger.TriggerDialogue();
+                triggered = true;
+
+            }
+        }
+
+        if (distanceBetwenPlayerAndHuman>3  )
+        {
+            triggered = false;
+        }
+
+
+
+
+
+
+        if (Input.GetKeyDown(KeyCode.E) && distanceBetwenPlayerAndHuman<3)
+        {
+            hasCoins = UnknownManInventory.INSTANCE.create(hasCoins);
+            if (hasCoins)
+            {
+                triggered = false;
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
+
+
 
     private void updateSelectedHotbarIndex(float direction)
     {
         if (direction > 0)
             direction = 1;
-
+            
         if (direction < 0)
             direction = -1;
 
