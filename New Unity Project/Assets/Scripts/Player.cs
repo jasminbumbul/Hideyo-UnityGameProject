@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     private bool triggered = false;
 
     bool hasCoins = false;
+    public GameObject InteractText;
+    float timer = 0.0f;
+    Animator dialogueBoxAnimator;
 
     private void Awake()
     {
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour
     {
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
         dialogueTrigger=GameObject.Find("Trader").GetComponent<DialogueTrigger>();
-
+        dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>(); 
 
         foreach (Item item in itemsToAdd)
         {
@@ -64,6 +67,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        timer += Time.deltaTime;
+        timer %= 60;
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -78,13 +83,13 @@ public class Player : MonoBehaviour
         }
 
 
-        for (int i = 0; i < hotbarControls.Length; i++)
-        {
-            if (Input.GetKeyDown(hotbarControls[i]))
-            {
-                selectedHotbarIndex = i;
-            }
-        }
+        //for (int i = 0; i < hotbarControls.Length; i++)
+        //{
+        //    if (Input.GetKeyDown(hotbarControls[i]))
+        //    {
+        //        selectedHotbarIndex = i;
+        //    }
+        //}
 
 
 
@@ -104,6 +109,7 @@ public class Player : MonoBehaviour
                             NextThrow = Time.time + ThrowRate;
                             Invoke("SpawnBlade", 1);
                             item.decreaseAmount(1);
+                            break;
                         }
                     }
                 }
@@ -139,7 +145,7 @@ public class Player : MonoBehaviour
             {
                 animator.SetBool("SwordOut", false);
                 var children = new List<GameObject>();
-                foreach (Transform child in GameObject.Find("MiddleHand.R_MP").transform) children.Add(child.gameObject);
+                foreach (Transform child in GameObject.FindWithTag("Zglob").transform) children.Add(child.gameObject);
                 //children.ForEach(child => Destroy(child));
                 foreach (var child in children)
                 {
@@ -166,6 +172,7 @@ public class Player : MonoBehaviour
                     {
                         item.decreaseAmount(1);
                         Health.instance.health+=50;
+                        break;
                     }
                 }
             }
@@ -193,42 +200,50 @@ public class Player : MonoBehaviour
             animator.SetBool("IsDefending",false);
         }
 
-
         //interaction with humans
         float distanceBetwenPlayerAndHuman=Vector3.Distance(this.transform.position,Human.transform.position);
 
-        if (distanceBetwenPlayerAndHuman < 3 && triggered == false)
+
+        if (distanceBetwenPlayerAndHuman < 3 && triggered == false && Input.GetKey(KeyCode.E))
         {
+            timer = 0.0f;
             if (hasCoins)
             {
                 dialogueTrigger.TriggerDialogue(hasCoins);
-                triggered = true ;
+                triggered = true;
             }
             else
             {
                 dialogueTrigger.TriggerDialogue();
                 triggered = true;
-
             }
         }
 
-        if (distanceBetwenPlayerAndHuman>3  )
+        if (distanceBetwenPlayerAndHuman < 3)
+        {
+            InteractText.SetActive(true);
+        }
+        else
+        {
+            InteractText.SetActive(false);
+        }
+
+
+        if (distanceBetwenPlayerAndHuman > 3)
         {
             triggered = false;
         }
 
-
-
-
-
-
-        if (Input.GetKeyDown(KeyCode.E) && distanceBetwenPlayerAndHuman<3)
+        Debug.Log(InventoryManager.INSTANCE.hasInventoryCurrentlyOpen());
+        if (Input.GetKeyDown(KeyCode.E) && distanceBetwenPlayerAndHuman < 3 && !dialogueBoxAnimator.GetBool("IsOpen"))
         {
-            hasCoins = UnknownManInventory.INSTANCE.create(hasCoins);
-            if (hasCoins)
-            {
-                triggered = false;
-            }
+          
+                hasCoins = UnknownManInventory.INSTANCE.create(hasCoins);
+                if (hasCoins)
+                {
+                    triggered = false;
+                }
+          
         }
 
 

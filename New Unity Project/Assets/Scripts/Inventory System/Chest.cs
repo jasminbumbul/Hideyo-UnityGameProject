@@ -11,6 +11,7 @@ public class Chest : MonoBehaviour
 
     [SerializeField]
     private GameObject OpenContainerText;
+    bool check = false;
     void Start ()
     {
         player = FindObjectOfType<Player>();
@@ -29,26 +30,27 @@ public class Chest : MonoBehaviour
         if (distance <= 4 && !inventoryManager.hasInventoryCurrentlyOpen())
         {
             OpenContainerText.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E) )
+            if (Input.GetKeyDown(KeyCode.E))
             {
 
                 inventoryManager.openContainer(new ContainerChest(inventory, player.getInventory()));
-                 OpenContainerText.gameObject.SetActive(false);
-            }
-           
-        }
-         else
-            {
-                if(Input.GetKeyDown(KeyCode.E) && inventoryManager.hasInventoryCurrentlyOpen())
-                {
-                    inventoryManager.closeContainer();
-                }
-               
-            }
-            if(distance>4)
-            {
-                 OpenContainerText.gameObject.SetActive(false);
+                check = true;
+                OpenContainerText.gameObject.SetActive(false);
             }
 
+        }
+        else
+        {
+            if ((Input.GetKeyDown(KeyCode.E) && inventoryManager.hasInventoryCurrentlyOpen()) && check==true)
+            {
+                inventoryManager.closeContainer();
+                check = false;
+            }
+
+        }
+        if (distance > 4)
+        {
+            OpenContainerText.gameObject.SetActive(false);
+        }
     }
 }

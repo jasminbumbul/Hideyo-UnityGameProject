@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+
 public class Health : MonoBehaviour
 {
     public float health;
@@ -16,9 +18,9 @@ public class Health : MonoBehaviour
      float animationTime = 1f;
     public bool dead=false;
     public static Health instance;
-    private Rigidbody rigidbody;
     public GameObject EnemysKatana;
-    private enemy_2_detection skripta;
+    private NavMeshAgent skripta;
+    private enemy_2_detection skripta2;
 
     void Awake()
     {
@@ -28,9 +30,9 @@ public class Health : MonoBehaviour
     void Start()
     {
         animator=this.GetComponent<Animator>();
-        rigidbody=this.GetComponent<Rigidbody>();
         health = Maxhealth;
-        skripta=this.GetComponent<enemy_2_detection>();
+        skripta=this.GetComponent<NavMeshAgent>();
+        skripta2=this.GetComponent<enemy_2_detection>();
 
         slider.value = CalculateHealth();
       
@@ -59,13 +61,19 @@ public class Health : MonoBehaviour
             {
                 animator.SetBool("Death",true);
                 Destroy(EnemysKatana);
-                skripta.gameObject.SetActive(false);
+                skripta.enabled = false;
+                skripta2.enabled = false;
+                Invoke("DestroyObject", 10);
             }
         }
         if (health > Maxhealth)
         {
             health = Maxhealth;
         }
+    }
+    private void DestroyObject()
+    {
+        Destroy(this.gameObject);
     }
     public float CalculateHealth()
     {

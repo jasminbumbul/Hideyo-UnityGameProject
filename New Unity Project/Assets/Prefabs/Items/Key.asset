@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb8fb911543f70e4b908cfecd20f2969, type: 3}
-  m_Name: MedKit
+  m_Name: Key
   m_EditorClassIdentifier: 
-  ItemName: MedKit
-  ItemIcon: {fileID: 1142586732419344882, guid: fceee79eeee6bbb4fa9a7e889e5afaf4,
-    type: 3}
-  maxStackSize: 10
+  ItemName: Key
+  ItemIcon: {fileID: 21300000, guid: 238650cbb4d59824292babe4fe2c01c9, type: 3}
+  maxStackSize: 1

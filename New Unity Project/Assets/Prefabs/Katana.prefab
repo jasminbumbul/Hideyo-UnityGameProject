@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6780910325055253705}
   - component: {fileID: 3821191141928470739}
   - component: {fileID: 5054855240602376212}
-  - component: {fileID: 6984825717419868530}
+  - component: {fileID: 4594375364013115673}
   m_Layer: 10
   m_Name: Katana
   m_TagString: Untagged
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Katana
   Amount: 1
---- !u!114 &6984825717419868530
+--- !u!114 &4594375364013115673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,7 +174,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7517419320800248402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
