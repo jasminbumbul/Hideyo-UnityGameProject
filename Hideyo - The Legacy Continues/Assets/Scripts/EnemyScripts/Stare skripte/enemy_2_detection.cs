@@ -58,7 +58,7 @@ public class enemy_2_detection : MonoBehaviour
 
 
 
-            navMeshAgent.stoppingDistance = 3;
+            navMeshAgent.stoppingDistance = 0;
         }
         catch (System.Exception)
         {
