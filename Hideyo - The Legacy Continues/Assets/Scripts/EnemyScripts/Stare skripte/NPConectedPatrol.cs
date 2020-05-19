@@ -190,28 +190,31 @@ public class NPConectedPatrol : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (agent != null)
         {
-
-
-            //GotoNextPoint();
-            if (patrolWaiting)
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                waitTimer += Time.deltaTime;
-                agent.SetDestination(agent.transform.position);
-                if (waitTimer >= totalWaitTime)
+
+
+                //GotoNextPoint();
+                if (patrolWaiting)
+                {
+                    waitTimer += Time.deltaTime;
+                    agent.SetDestination(agent.transform.position);
+                    if (waitTimer >= totalWaitTime)
+                    {
+                        GotoNextPoint();
+                        waitTimer = 0;
+                    }
+                }
+                else
                 {
                     GotoNextPoint();
-                    waitTimer = 0;
                 }
-            }
-            else
-            {
-                GotoNextPoint();
+
             }
 
         }
-
     }
 
 }
