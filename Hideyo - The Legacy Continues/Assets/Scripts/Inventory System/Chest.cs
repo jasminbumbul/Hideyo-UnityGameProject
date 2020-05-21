@@ -28,16 +28,14 @@ public class Chest : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distance <= 4 && !inventoryManager.hasInventoryCurrentlyOpen())
+        if (distance<4 && !inventoryManager.hasInventoryCurrentlyOpen())
         {
-            OpenContainerText.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
 
                 inventoryManager.openContainer(new ContainerChest(inventory, player.getInventory()));
                 check = true;
             openCloseInventoryAudioSource.Play();
-                OpenContainerText.gameObject.SetActive(false);
             }
 
         }
@@ -51,9 +49,9 @@ public class Chest : MonoBehaviour
             }
 
         }
-        if (distance > 4)
-        {
-            OpenContainerText.gameObject.SetActive(false);
-        }
+        // if (distance > 4)
+        // {
+        //     OpenContainerText.gameObject.SetActive(false);
+        // }
     }
 }
