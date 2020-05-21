@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     public GameObject BladeSlot;
     public GameObject MedKitSlot;
     public GameObject CoinSlot;
-    private GameObject[] Chest;
+
 
     public AudioSource punchAudioSource;
     public AudioSource swordSlashAudioSource;
@@ -76,8 +76,6 @@ public class Player : MonoBehaviour
         dialogueTrigger=GameObject.Find("Trader").GetComponent<DialogueTrigger>();
         dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>(); 
 
-        Chest=GameObject.FindGameObjectsWithTag("Chest");
-        
         foreach (Item item in itemsToAdd)
         {
             myInventory.addItem(new ItemStack(item, 1));
@@ -210,7 +208,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && animator.GetBool("SwordOut") && !animator.GetBool("IsRunning") && !animator.GetBool("JumpTrigger"))
         {
-            if (timer > 0.8f)
+            if (timer > 1f)
             {
                 animator.SetTrigger("SwordTrigger");
                 swordSlashAudioSource.Play();
@@ -328,24 +326,6 @@ public class Player : MonoBehaviour
         if (timer > 3)
         {
             ChangeableInteractText.SetActive(false);
-        }
-
-        //interakcija sa chestom
-        float distance=0f;
-        float minDistance=1000f;
-
-        foreach(var chest in Chest)
-        {
-           distance = Vector3.Distance(transform.position, chest.transform.position);
-           if(distance<minDistance)
-           {
-               minDistance=distance;
-           }
-        }
-
-        if(minDistance<4)
-        {
-            InteractText.SetActive(true);
         }
 
 

@@ -51,7 +51,7 @@ public class test : MonoBehaviour
         }
         if (desiredMoveDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed*5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed);
 
         }
         float targetSpeed = movenetSpeed * movementInput.magnitude;
