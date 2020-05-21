@@ -8,6 +8,7 @@ TagManager:
   - Zglob
   - Enemy
   - EnemyKatana
+  - Chest
   layers:
   - Default
   - TransparentFX

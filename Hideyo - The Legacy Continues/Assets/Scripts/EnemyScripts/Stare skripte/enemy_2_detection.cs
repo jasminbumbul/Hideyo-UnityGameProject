@@ -42,7 +42,7 @@ public class enemy_2_detection : MonoBehaviour
                 }
                 else
                 {
-                    navMeshAgent.stoppingDistance = 2;
+                    navMeshAgent.stoppingDistance = 3;
 
                     if(timer>2)
                     {
@@ -58,7 +58,7 @@ public class enemy_2_detection : MonoBehaviour
 
 
 
-            navMeshAgent.stoppingDistance = 0;
+            navMeshAgent.stoppingDistance = 1;
         }
         catch (System.Exception)
         {
