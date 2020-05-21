@@ -27,4 +27,9 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
+    public void StopDialogue()
+    {
+        FindObjectOfType<DialogueManager>().EndConversation();
+    }
+
 }

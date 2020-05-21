@@ -59,4 +59,10 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("IsOpen",false);
     }
+
+    public void EndConversation()
+    {
+        sentences.Clear();
+        animator.SetBool("IsOpen",false);
+    }
 }

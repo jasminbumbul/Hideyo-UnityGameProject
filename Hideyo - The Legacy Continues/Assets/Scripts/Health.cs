@@ -22,8 +22,12 @@ public class Health : MonoBehaviour
     private NavMeshAgent skripta;
     private enemy_2_detection skripta2;
     public AudioSource deathAudioSource;
+    public GameObject Key;
+    public GameObject ItemSpawnPoint;
+    public Transform SpawnedItemsContainer;
 
     private bool soundHasPlayed;
+    private bool hasDroppedKey;
     void Awake()
     {
         instance = this;
@@ -73,6 +77,12 @@ public class Health : MonoBehaviour
                 {
                     deathAudioSource.Play();
                     soundHasPlayed = true;
+                }
+                if(this.gameObject.name=="EnemyWithKey" && !hasDroppedKey)
+                {
+                    hasDroppedKey=true;
+                    GameObject.Instantiate(Key, ItemSpawnPoint.transform.position, ItemSpawnPoint.transform.rotation, SpawnedItemsContainer);
+
                 }
                 Invoke("DestroyObject", 10);
             }
