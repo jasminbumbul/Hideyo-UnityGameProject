@@ -96,6 +96,7 @@ public class InventoryManager : MonoBehaviour
 
     public void openContainer(Container container)
     {
+        Cursor.lockState = CursorLockMode.None;
         if (currentOpenContainer != null)
         {
             currentOpenContainer.closeContainer();
@@ -113,6 +114,7 @@ public class InventoryManager : MonoBehaviour
 
     public void closeContainer()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         if (currentOpenContainer != null)
         {
             currentOpenContainer.closeContainer();

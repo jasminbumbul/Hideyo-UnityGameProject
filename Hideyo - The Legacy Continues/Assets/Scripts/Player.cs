@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
 
         //InventoryManager.INSTANCE.openContainer(new ContainerPlayerHotbar(null, myInventory));
         InventoryManager.INSTANCE.resetInventoryStatus();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -97,11 +98,13 @@ public class Player : MonoBehaviour
             openCloseInventoryAudioSource.Play();
             if (!InventoryManager.INSTANCE.hasInventoryCurrentlyOpen())
             {
+                Cursor.lockState = CursorLockMode.None;
                 InventoryManager.INSTANCE.openContainer(new ContainerPlayerInventory(null, myInventory));
             }
             else
             {
                 InventoryManager.INSTANCE.closeInventory();
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
 
@@ -245,6 +248,7 @@ public class Player : MonoBehaviour
             InteractText.SetActive(true);
             if (triggered == false && Input.GetKey(KeyCode.E))
             {
+                Cursor.lockState = CursorLockMode.None;
                 CoinSlot.SetActive(true);
                 AddCoinSlotUI();
                 timer = 0.0f;
@@ -264,6 +268,7 @@ public class Player : MonoBehaviour
 
         if (distanceBetwenPlayerAndHuman > 3)
         {
+        Cursor.lockState = CursorLockMode.Locked;
             triggered = false;
             dialogueTrigger.StopDialogue();
             InteractText.SetActive(false);
@@ -346,6 +351,7 @@ public class Player : MonoBehaviour
         if(minDistance<4)
         {
             InteractText.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
         }
 
 
