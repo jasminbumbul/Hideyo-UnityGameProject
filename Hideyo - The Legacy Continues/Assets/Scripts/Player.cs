@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour
 
     public GameObject Human;
     private DialogueTrigger dialogueTrigger;
-    public bool triggered = false;
+    private bool triggered = false;
 
     bool hasCoins = false;
     public GameObject InteractText;
@@ -38,8 +37,8 @@ public class Player : MonoBehaviour
     float timer = 0.0f;
     Animator dialogueBoxAnimator;
     public GameObject MainCastleDoor;
-    private bool check = false;
-    private bool checkInteractText = false;
+    private bool check=false;
+    private bool checkInteractText=false;
 
     public GameObject KatanaSlot;
     public GameObject BladeSlot;
@@ -54,10 +53,8 @@ public class Player : MonoBehaviour
     public AudioSource HealAudioSource;
 
     public static Player instance;
-    public float distanceBetwenPlayerAndHuman;
 
     public bool isPaused = false;
-    private int counter = 0;
 
     private void Awake()
     {
@@ -77,11 +74,11 @@ public class Player : MonoBehaviour
     private void Start()
     {
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
-        dialogueTrigger = GameObject.Find("Trader").GetComponent<DialogueTrigger>();
-        dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>();
+        dialogueTrigger=GameObject.Find("Trader").GetComponent<DialogueTrigger>();
+        dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>(); 
 
-        Chest = GameObject.FindGameObjectsWithTag("Chest");
-
+        Chest=GameObject.FindGameObjectsWithTag("Chest");
+        
         foreach (Item item in itemsToAdd)
         {
             myInventory.addItem(new ItemStack(item, 1));
@@ -135,13 +132,13 @@ public class Player : MonoBehaviour
                     if (item.item != null)
                     {
 
-                        if (item.item.name == "Blade" && item.count > 0 && timer > 1)
+                        if (item.item.name == "Blade" && item.count > 0 && timer>1 )
                         {
                             animator.SetTrigger("BladeTrigger");
                             NextThrow = Time.time + ThrowRate;
                             Invoke("SpawnBlade", 1);
                             item.decreaseAmount(1);
-                            timer = 0;
+                            timer=0;
                             break;
                         }
                     }
@@ -203,11 +200,11 @@ public class Player : MonoBehaviour
             {
                 if (item.item != null)
                 {
-                    if (item.item.name == "MedKit" && item.count > 0 && timer > 1)
+                    if (item.item.name == "MedKit" && item.count > 0 && timer>1)
                     {
                         HealAudioSource.Play();
                         item.decreaseAmount(1);
-                        Health.instance.health += 50;
+                        Health.instance.health+=50;
                         break;
                     }
                 }
@@ -240,20 +237,19 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButton(1) && animator.GetBool("SwordOut"))
         {
-            animator.SetBool("IsDefending", true);
+            animator.SetBool("IsDefending",true);
         }
-        else
-        {
-            animator.SetBool("IsDefending", false);
+        else{
+            animator.SetBool("IsDefending",false);
         }
 
         //interaction with humans
-        distanceBetwenPlayerAndHuman = Vector3.Distance(this.transform.position, Human.transform.position);
+        float distanceBetwenPlayerAndHuman=Vector3.Distance(this.transform.position,Human.transform.position);
 
         if (distanceBetwenPlayerAndHuman < 3)
         {
             InteractText.SetActive(true);
-            if ((triggered == false && Input.GetKey(KeyCode.E)) || hasCoins && !triggered && counter == 0)
+            if (triggered == false && Input.GetKey(KeyCode.E))
             {
                 Cursor.lockState = CursorLockMode.None;
                 CoinSlot.SetActive(true);
@@ -263,7 +259,6 @@ public class Player : MonoBehaviour
                 {
                     dialogueTrigger.TriggerDialogue(hasCoins);
                     triggered = true;
-                    counter++;
                 }
                 else
                 {
@@ -274,16 +269,11 @@ public class Player : MonoBehaviour
         }
 
 
-        if (!isPaused && (distanceBetwenPlayerAndHuman > 3 && triggered))
+        if (distanceBetwenPlayerAndHuman > 3 && !isPaused)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
             triggered = false;
             dialogueTrigger.StopDialogue();
-            InteractText.SetActive(false);
-        }
-
-        if (distanceBetwenPlayerAndHuman > 3 && !triggered)
-        {
             InteractText.SetActive(false);
         }
 
@@ -298,50 +288,46 @@ public class Player : MonoBehaviour
 
         }
 
-        if (SceneManager.GetActiveScene().name == "SecondScene")
+
+        //opening the main door with the key
+        float distanceBetwenPlayerAndMainDoor = Vector3.Distance(this.transform.position, MainCastleDoor.transform.position);
+
+        if(hasKey())
         {
+            GameObject.Find("Odobreno").GetComponent<Light>().color=Color.green;
+        }
+        else{
+            GameObject.Find("Odobreno").GetComponent<Light>().color=Color.red;
+        }
 
-            //opening the main door with the key
-            float distanceBetwenPlayerAndMainDoor = Vector3.Distance(this.transform.position, MainCastleDoor.transform.position);
-
-            if (hasKey())
+        if (distanceBetwenPlayerAndMainDoor < 5 )
+        {
+            InteractText.SetActive(true);
+            if (Input.GetKey(KeyCode.E))
             {
-                GameObject.Find("Odobreno").GetComponent<Light>().color = Color.green;
-            }
-            else
-            {
-                GameObject.Find("Odobreno").GetComponent<Light>().color = Color.red;
-            }
-
-            if (distanceBetwenPlayerAndMainDoor < 5)
-            {
-                InteractText.SetActive(true);
-                if (Input.GetKey(KeyCode.E))
+                check=true;
+                if (hasKey())
                 {
-                    check = true;
-                    if (hasKey())
-                    {
-                        decreaseKeyAmount();
-                        //nova scena
-                        Debug.Log("nova scena");
-                    }
-
-                    else
-                    {
-                        ChangeableInteractText.SetActive(true);
-                        timer = 0;
-                    }
+                    decreaseKeyAmount();
+                    //nova scena
+                    Debug.Log("nova scena");
                 }
-                if (check)
+
+                else
                 {
-                    InteractText.SetActive(false);
+                    ChangeableInteractText.SetActive(true);
+                    timer = 0;
                 }
             }
-            else
+            if(check)
             {
-                // InteractText.SetActive(false);
-                check = false;
+                InteractText.SetActive(false);
             }
+        }
+        else
+        {
+            // InteractText.SetActive(false);
+            check=false;
         }
 
 
@@ -353,19 +339,19 @@ public class Player : MonoBehaviour
         }
 
         //interakcija sa chestom
-        float distance = 0f;
-        float minDistance = 1000f;
+        float distance=0f;
+        float minDistance=1000f;
 
-        foreach (var chest in Chest)
+        foreach(var chest in Chest)
         {
-            distance = Vector3.Distance(transform.position, chest.transform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-            }
+           distance = Vector3.Distance(transform.position, chest.transform.position);
+           if(distance<minDistance)
+           {
+               minDistance=distance;
+           }
         }
 
-        if (minDistance < 4)
+        if(minDistance<4)
         {
             InteractText.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -376,32 +362,29 @@ public class Player : MonoBehaviour
 
 
     }
-    /// <summary>
-    /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
+
     private void AddCoinSlotUI()
     {
-        int numberOfItems = 0;
+        int numberOfItems=0;
         foreach (var item in myInventory.getInventoryStacks())
         {
             if (item.item != null)
             {
                 if (item.item.name == "Coin")
                 {
-                    numberOfItems += item.count;
+                      numberOfItems+=item.count;
                 }
             }
         }
-        GameObject.Find("BladeSlotAmount").GetComponent<Text>().text = numberOfItems.ToString() + "/20";
+        GameObject.Find("BladeSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
     }
 
     private void CheckForItems()
     {
-        bool postojiBlade = false;
-        bool postojiMedKit = false;
-        bool postojiCoin = false;
-        int numberOfItems = 0;
+        bool postojiBlade=false;
+        bool postojiMedKit=false;
+        bool postojiCoin=false;
+        int numberOfItems=0;
 
         foreach (var item in myInventory.getInventoryStacks())
         {
@@ -409,22 +392,22 @@ public class Player : MonoBehaviour
             {
                 if (item.item.name == "Blade")
                 {
-                    postojiBlade = true;
-                    numberOfItems += item.count;
-                    BladeSlot.SetActive(true);
+                      postojiBlade=true;
+                      numberOfItems+=item.count;
+                      BladeSlot.SetActive(true);
                 }
             }
         }
-        if (postojiBlade)
+        if(postojiBlade)
         {
-            GameObject.Find("BladeSlotAmount").GetComponent<Text>().text = numberOfItems.ToString();
+        GameObject.Find("BladeSlotAmount").GetComponent<Text>().text=numberOfItems.ToString();
 
         }
-        if (numberOfItems <= 0)
+        if(numberOfItems<=0)
         {
             BladeSlot.SetActive(false);
         }
-        numberOfItems = 0;
+        numberOfItems=0;
 
         foreach (var item in myInventory.getInventoryStacks())
         {
@@ -432,17 +415,17 @@ public class Player : MonoBehaviour
             {
                 if (item.item.name == "MedKit")
                 {
-                    postojiMedKit = true;
-                    MedKitSlot.SetActive(true);
-                    numberOfItems += item.count;
+                      postojiMedKit=true;
+                      MedKitSlot.SetActive(true);
+                      numberOfItems+=item.count;
                 }
             }
         }
-        if (postojiMedKit)
+        if(postojiMedKit)
         {
-            GameObject.Find("MedKitSlotAmount").GetComponent<Text>().text = numberOfItems.ToString();
+        GameObject.Find("MedKitSlotAmount").GetComponent<Text>().text=numberOfItems.ToString();
         }
-        if (numberOfItems <= 0)
+        if(numberOfItems<=0)
         {
             MedKitSlot.SetActive(false);
         }
@@ -453,29 +436,28 @@ public class Player : MonoBehaviour
             {
                 if (item.item.name == "Coin")
                 {
-                    postojiCoin = true;
-                    numberOfItems += item.count;
+                      postojiCoin=true;
+                      numberOfItems+=item.count;
                 }
             }
         }
-        if (!postojiCoin)
+        if(!postojiCoin)
         {
-            numberOfItems = 0;
+            numberOfItems=0;
         }
-        if (CoinSlot.activeSelf)
+        if( CoinSlot.activeSelf)
         {
-            GameObject.Find("CoinSlotAmount").GetComponent<Text>().text = numberOfItems.ToString() + "/20";
-            if (numberOfItems >= 20)
+            GameObject.Find("CoinSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
+            if(numberOfItems>=20)
             {
-                GameObject.Find("CoinSlotAmount").GetComponent<Text>().color = Color.green;
+                 GameObject.Find("CoinSlotAmount").GetComponent<Text>().color=Color.green;
             }
-            else
-            {
-                GameObject.Find("CoinSlotAmount").GetComponent<Text>().color = Color.red;
+            else{
+                 GameObject.Find("CoinSlotAmount").GetComponent<Text>().color=Color.red;
             }
         }
-
-
+        
+      
     }
 
     private bool hasKey()

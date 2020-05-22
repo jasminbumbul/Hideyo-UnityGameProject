@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count==0)
+        if(sentences.Count==0)
         {
             EndDialogue();
             return;
@@ -63,7 +63,6 @@ public class DialogueManager : MonoBehaviour
     public void EndConversation()
     {
         sentences.Clear();
-        animator.SetBool("IsOpen", false);
-
+        animator.SetBool("IsOpen",false);
     }
 }
