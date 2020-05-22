@@ -11,9 +11,9 @@ public class normal_people_mowing : NPConectedPatrol
         if (points.Length == 0)
             return;
         // Returns if no points have been set up
-        points[0].position = new Vector3(x, y, z - 6);
-        points[1].position = new Vector3(x + 6, y, z);
-        points[2].position = new Vector3(x, y, z + 6);
+        points[0].position = new Vector3(x, y, z - 15);
+        points[1].position = new Vector3(x + 10, y, z);
+        points[2].position = new Vector3(x, y, z + 15);
         points[3].position = new Vector3(x + 6, y, z + 6);
 
         // Set the agent to go to the currently selected destination.

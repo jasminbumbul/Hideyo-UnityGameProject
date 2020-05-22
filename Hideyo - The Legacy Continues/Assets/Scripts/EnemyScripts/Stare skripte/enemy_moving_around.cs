@@ -10,9 +10,9 @@ public class enemy_moving_around : NPConectedPatrol
         if (points.Length == 0)
             return;
         // Returns if no points have been set up
-        points[0].position = new Vector3(x, y, z - 3);
-        points[1].position = new Vector3(x + 3, y, z);
-        points[2].position = new Vector3(x, y, z + 3);
+        points[0].position = new Vector3(x, y, z - 8);
+        points[1].position = new Vector3(x + 12, y, z);
+        points[2].position = new Vector3(x, y, z + 12);
         //points[3].position = new Vector3(x + 3, y, z + 3);
 
         // Set the agent to go to the currently selected destination.
