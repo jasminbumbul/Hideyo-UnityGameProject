@@ -42,9 +42,9 @@ public class enemy_2_detection : MonoBehaviour
                 }
                 else
                 {
-                    navMeshAgent.stoppingDistance = 3;
+                    navMeshAgent.stoppingDistance = 5;
 
-                    if(timer>2)
+                    if(timer>1.5)
                     {
                     animator.SetTrigger("IsAttacking");
                     SwordSlashAudioSource.Play();

@@ -52,8 +52,9 @@ public class Player : MonoBehaviour
     public AudioSource openCloseInventoryAudioSource;
     public AudioSource HealAudioSource;
 
+    public static Player instance;
 
-    
+    public bool isPaused = false;
 
     private void Awake()
     {
@@ -85,7 +86,9 @@ public class Player : MonoBehaviour
 
         //InventoryManager.INSTANCE.openContainer(new ContainerPlayerHotbar(null, myInventory));
         InventoryManager.INSTANCE.resetInventoryStatus();
+
         Cursor.lockState = CursorLockMode.Locked;
+        instance = this;
     }
 
     private void Update()
@@ -266,7 +269,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (distanceBetwenPlayerAndHuman > 3)
+        if (distanceBetwenPlayerAndHuman > 3 && !isPaused)
         {
         Cursor.lockState = CursorLockMode.Locked;
             triggered = false;

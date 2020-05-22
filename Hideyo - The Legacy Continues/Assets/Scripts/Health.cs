@@ -26,6 +26,9 @@ public class Health : MonoBehaviour
     public GameObject ItemSpawnPoint;
     public Transform SpawnedItemsContainer;
 
+    public PlayerMovement playerMovement;
+    public test test;
+
     private bool soundHasPlayed;
     private bool hasDroppedKey;
     void Awake()
@@ -39,6 +42,9 @@ public class Health : MonoBehaviour
         health = Maxhealth;
         skripta=this.GetComponent<NavMeshAgent>();
         skripta2=this.GetComponent<enemy_2_detection>();
+
+        playerMovement=this.GetComponent<PlayerMovement>();
+        test=this.GetComponent<test>();
 
         slider.value = CalculateHealth();
       
@@ -58,7 +64,9 @@ public class Health : MonoBehaviour
         {
             if (this.transform.gameObject.name == "HumanModel")
             {
-
+                playerMovement.enabled=false;
+                test.enabled=false;
+                animator.SetBool("Running",false);
                 animator.SetBool("Death", true);
                 if (!soundHasPlayed)
                 {
