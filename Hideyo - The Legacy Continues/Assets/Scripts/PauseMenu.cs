@@ -16,13 +16,13 @@ public class PauseMenu : MonoBehaviour
         {
             if (GameIsPaused)
             {
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 Resume();
             }
             else
             {
                 Pause();
-                Cursor.lockState = CursorLockMode.Confined;
+                //Cursor.lockState = CursorLockMode.Confined;
             }
         }
         
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
     public void LoadMenu()
     {

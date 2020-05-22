@@ -190,8 +190,7 @@ public class NPConectedPatrol : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (this.transform.gameObject != null)
-        {
+        
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
 
@@ -217,4 +216,3 @@ public class NPConectedPatrol : MonoBehaviour
         }
     }
 
-}
