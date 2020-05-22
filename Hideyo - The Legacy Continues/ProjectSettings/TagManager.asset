@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemyKatana
   - Chest
+  - HumanInteract
   layers:
   - Default
   - TransparentFX
