@@ -79,6 +79,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     private void onLeftClick(ItemStack curDraggedStack, ItemStack stackCopy)
     {
+        Debug.Log("onleft");
         if(!myStack.isEmpty() && curDraggedStack.isEmpty())
         {
             inventoryManager.setDragedItemStack(stackCopy);
