@@ -12,28 +12,38 @@ public class enemy_2_detection : MonoBehaviour
     NavMeshAgent navMeshAgent;
 
     private Animator animator;
-    float timer=0.0f;
+    float timer = 0.0f;
 
     void Start()
     {
         // skripa = this.GetComponent<enemy_moving_around>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
-        animator=this.GetComponent<Animator>();
+        animator = this.GetComponent<Animator>();
     }
 
     public void isDetected()
     {
+
+
+
+
+
         try
         {
             Vector3 direction = player.position - this.transform.position;
             float angle = Vector3.Angle(direction, this.transform.forward);
-            float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (Vector3.Distance(player.position, this.transform.position) < 20 && angle < 180)
+            //float distance = Vector3.Distance(transform.position, player.transform.position);
+            float x = transform.position.x - player.transform.position.x;
+            float z = transform.position.z - player.transform.position.z;
+            float y = transform.position.y - player.transform.position.y;
+
+
+            if ((Vector3.Distance(transform.position, player.transform.position) < 20 && (transform.position.y - player.transform.position.y) < 1) && angle < 180)
             {
                 navMeshAgent.speed = 3;
                 direction.y = 0;
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-                if (direction.magnitude > 3)
+                if (direction.magnitude >= 3)
                 {
                     navMeshAgent.speed = 5;
                     navMeshAgent.destination = player.position;
@@ -44,11 +54,11 @@ public class enemy_2_detection : MonoBehaviour
                 {
                     navMeshAgent.stoppingDistance = 3;
 
-                    if(timer>1.5)
+                    if (timer > 1.5)
                     {
-                    animator.SetTrigger("IsAttacking");
-                    SwordSlashAudioSource.Play();
-                    timer=0;
+                        animator.SetTrigger("IsAttacking");
+                        SwordSlashAudioSource.Play();
+                        timer = 0;
                     }
                 }
 
@@ -63,16 +73,16 @@ public class enemy_2_detection : MonoBehaviour
         catch (System.Exception)
         {
 
-           
+
         }
-    
+
     }
     void Update()
     {
-        timer+=Time.deltaTime;
-        timer%=60;
+        timer += Time.deltaTime;
+        timer %= 60;
         isDetected();
 
     }
-   
+
 }

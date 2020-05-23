@@ -124,7 +124,7 @@ public class Health : MonoBehaviour
     }
     private void Level2()
     {
-        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
+        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
     }
     private void DestroyObject()
     {

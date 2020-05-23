@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
     private GameObject[] Chest;
 
     public Animator transition;
-    float animationTime = 5f;
+    private float animationTime = 5f;
     public AudioSource punchAudioSource;
     public AudioSource swordSlashAudioSource;
     public AudioSource bladeThrowAudioSource;
@@ -345,8 +346,7 @@ public class Player : MonoBehaviour
                     if (hasKey())
                     {
                         decreaseKeyAmount();
-                        //nova scena
-                        Debug.Log("nova scena");
+                        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex + 1));
                     }
 
                     else
@@ -404,6 +404,7 @@ public class Player : MonoBehaviour
         if (hasCoins && other.transform.gameObject.name == "2ndLevelCollider")
         {
             Time.timeScale=1f;
+            
             StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
         }
     }
@@ -575,7 +576,7 @@ public class Player : MonoBehaviour
     
     public IEnumerator nextLevel(int index)
     {
-        animator.SetTrigger("start");
+        transition.SetTrigger("start");
         yield return new WaitForSeconds(animationTime);
         SceneManager.LoadScene(index);
 

@@ -55,9 +55,7 @@ public class PauseMenu : MonoBehaviour
     public  void LoadScene()
     {
         Time.timeScale = 1f;
-       
-
-        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
+        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
 
     }
     public void Quit()
