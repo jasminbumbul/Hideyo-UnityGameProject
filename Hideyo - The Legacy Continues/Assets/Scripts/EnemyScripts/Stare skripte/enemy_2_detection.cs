@@ -33,7 +33,7 @@ public class enemy_2_detection : MonoBehaviour
                 navMeshAgent.speed = 3;
                 direction.y = 0;
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-                if (direction.magnitude >= 3)
+                if (direction.magnitude > 3)
                 {
                     navMeshAgent.speed = 5;
                     navMeshAgent.destination = player.position;
@@ -42,7 +42,7 @@ public class enemy_2_detection : MonoBehaviour
                 }
                 else
                 {
-                    navMeshAgent.stoppingDistance = 5;
+                    navMeshAgent.stoppingDistance = 3;
 
                     if(timer>1.5)
                     {
@@ -58,7 +58,7 @@ public class enemy_2_detection : MonoBehaviour
 
 
 
-            navMeshAgent.stoppingDistance = 1;
+            navMeshAgent.stoppingDistance = 3;
         }
         catch (System.Exception)
         {

@@ -191,7 +191,7 @@ public class NPConectedPatrol : MonoBehaviour
         // Choose the next destination point when the agent gets
         // close to the current one.
         
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            if (!agent.pathPending && agent.remainingDistance <= 3f)
             {
 
 
