@@ -41,7 +41,6 @@ public class Detection : MonoBehaviour
                 {
                     if (other.transform.gameObject.transform.root.tag != "Enemy")
                     {
-                        Debug.Log("udar macem");
                         this.gameObject.GetComponent<Health>().health -= 30;
                         swordHurtAudioSource.Play();
                     }
@@ -55,14 +54,12 @@ public class Detection : MonoBehaviour
             {
                 if (other.transform.gameObject.transform.root.name != "HumanModel")
                 {
-                    Debug.Log("udar bladeom");
                     this.gameObject.GetComponent<Health>().health -= 15;
                     fistHurtAudioSource.Play();
                 }
             }
             else
             {
-                        Debug.Log("ne znam");
                 this.gameObject.GetComponent<Health>().health -= 30;
                 fistHurtAudioSource.Play();
             }
@@ -75,7 +72,6 @@ public class Detection : MonoBehaviour
             {
                 if (other.transform.gameObject.transform.root.name != "HumanModel")
                 {
-                        Debug.Log("udar sakom");
                     this.gameObject.GetComponent<Health>().health -= 5;
                     fistHurtAudioSource.Play();
 

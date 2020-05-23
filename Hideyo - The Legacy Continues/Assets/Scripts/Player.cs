@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -74,11 +75,15 @@ public class Player : MonoBehaviour
     private void Start()
     {
         animator = GameObject.Find("HumanModel").GetComponent<Animator>();
-        dialogueTrigger=GameObject.Find("Trader").GetComponent<DialogueTrigger>();
-        dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>(); 
+        if (SceneManager.GetActiveScene().name == "main")
+        {
+            dialogueTrigger = GameObject.Find("Trader").GetComponent<DialogueTrigger>();
+            dialogueBoxAnimator = GameObject.Find("DialogueBox").GetComponent<Animator>();
 
-        Chest=GameObject.FindGameObjectsWithTag("Chest");
-        
+        }
+
+        Chest = GameObject.FindGameObjectsWithTag("Chest");
+
         foreach (Item item in itemsToAdd)
         {
             myInventory.addItem(new ItemStack(item, 1));
@@ -244,6 +249,9 @@ public class Player : MonoBehaviour
         }
 
         //interaction with humans
+        if(SceneManager.GetActiveScene().name=="main")
+        {
+
         float distanceBetwenPlayerAndHuman=Vector3.Distance(this.transform.position,Human.transform.position);
 
         if (distanceBetwenPlayerAndHuman < 3)
@@ -287,6 +295,7 @@ public class Player : MonoBehaviour
             }
 
         }
+        }
 
 
         //opening the main door with the key
@@ -300,7 +309,7 @@ public class Player : MonoBehaviour
             GameObject.Find("Odobreno").GetComponent<Light>().color=Color.red;
         }
 
-        if (distanceBetwenPlayerAndMainDoor < 5 )
+        if (distanceBetwenPlayerAndMainDoor < 8 )
         {
             InteractText.SetActive(true);
             if (Input.GetKey(KeyCode.E))
