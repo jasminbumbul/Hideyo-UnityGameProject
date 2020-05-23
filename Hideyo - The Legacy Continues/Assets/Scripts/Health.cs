@@ -31,6 +31,7 @@ public class Health : MonoBehaviour
 
     private bool soundHasPlayed;
     private bool hasDroppedKey;
+    private float timer=0.0f;
     void Awake()
     {
         instance = this;
@@ -47,12 +48,16 @@ public class Health : MonoBehaviour
         test=this.GetComponent<test>();
 
         slider.value = CalculateHealth();
+     
       
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        timer+=Time.deltaTime;
+        timer%=60;
         slider.value = CalculateHealth();
 
 
@@ -73,7 +78,20 @@ public class Health : MonoBehaviour
                     deathAudioSource.Play();
                     soundHasPlayed = true;
                 }
-                Invoke("nextLevel", 3);
+
+                if(timer>2)
+                {
+                    Player.Instance.RemoveAllInventoryItems();
+                }
+                if (SceneManager.GetActiveScene().name == "main")
+                {
+                    Invoke("Level1", 3);
+                }
+                if (SceneManager.GetActiveScene().name == "SecondScene")
+                {
+                    Invoke("Level2", 3);
+                }
+                
             }
             else
             {
@@ -100,9 +118,13 @@ public class Health : MonoBehaviour
             health = Maxhealth;
         }
     }
-    private void nextLevel()
+    private void Level1()
     {
         StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
+    }
+    private void Level2()
+    {
+        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
     }
     private void DestroyObject()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCivilInteract : MonoBehaviour
 {
@@ -23,39 +24,42 @@ public class PlayerCivilInteract : MonoBehaviour
 
     void Update()
     {
-
-        minDistance = 1000f;
-        foreach (var human in Humans)
+        if (SceneManager.GetActiveScene().name == "main")
         {
-            distance = Vector3.Distance(transform.position, human.transform.position);
-            if (distance < minDistance)
+
+            minDistance = 1000f;
+            foreach (var human in Humans)
             {
-                minDistance = distance;
-                dialogueTrigger = human.GetComponent<DialogueTrigger>();
+                distance = Vector3.Distance(transform.position, human.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    dialogueTrigger = human.GetComponent<DialogueTrigger>();
+                }
             }
-        }
 
 
-        if (minDistance < 4)
-        {
-            InteractText.SetActive(true);
-            if (triggered == false && Input.GetKey(KeyCode.E))
+            if (minDistance < 4)
             {
-                Cursor.lockState = CursorLockMode.None;
-                dialogueTrigger.TriggerDialogue();
-                triggered = true;
+                InteractText.SetActive(true);
+                if (triggered == false && Input.GetKey(KeyCode.E))
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    dialogueTrigger.TriggerDialogue();
+                    triggered = true;
+                }
             }
-        }
-        if ((minDistance>4 && triggered))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            InteractText.SetActive(false);
-            dialogueTrigger.StopDialogue();
-            triggered = false;
-        }
-        if(minDistance>4 && !triggered)
-        {
-            InteractText.SetActive(false);
+            if ((minDistance > 4 && triggered))
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                InteractText.SetActive(false);
+                dialogueTrigger.StopDialogue();
+                triggered = false;
+            }
+            if (minDistance > 4 && !triggered)
+            {
+                InteractText.SetActive(false);
+            }
         }
     }
 }

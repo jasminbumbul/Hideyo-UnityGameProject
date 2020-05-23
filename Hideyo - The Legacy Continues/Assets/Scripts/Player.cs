@@ -38,8 +38,8 @@ public class Player : MonoBehaviour
     float timer = 0.0f;
     Animator dialogueBoxAnimator;
     public GameObject MainCastleDoor;
-    private bool check=false;
-    private bool checkInteractText=false;
+    private bool check = false;
+    private bool checkInteractText = false;
 
     public GameObject KatanaSlot;
     public GameObject BladeSlot;
@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
     public GameObject CoinSlot;
     private GameObject[] Chest;
 
+    public Animator transition;
+    float animationTime = 5f;
     public AudioSource punchAudioSource;
     public AudioSource swordSlashAudioSource;
     public AudioSource bladeThrowAudioSource;
@@ -54,23 +56,24 @@ public class Player : MonoBehaviour
     public AudioSource HealAudioSource;
 
     public static Player instance;
+    private int counter = 0;
 
     public bool isPaused = false;
-
+  
     private void Awake()
     {
         Instance = this;
     }
 
-    private KeyCode[] hotbarControls = new KeyCode[]
-    {
-        KeyCode.Alpha1, //Key 1
-        KeyCode.Alpha2, //Key 2
-        KeyCode.Alpha3, //Key 3
-        KeyCode.Alpha4, //Key 4
-        KeyCode.Alpha5, //Key 5
-        KeyCode.Alpha6 //Key 6
-    };
+    // private KeyCode[] hotbarControls = new KeyCode[]
+    // {
+    //     KeyCode.Alpha1, //Key 1
+    //     KeyCode.Alpha2, //Key 2
+    //     KeyCode.Alpha3, //Key 3
+    //     KeyCode.Alpha4, //Key 4
+    //     KeyCode.Alpha5, //Key 5
+    //     KeyCode.Alpha6  //Key 6
+    // };
 
     private void Start()
     {
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour
         {
             myInventory.addItem(new ItemStack(item, 1));
         }
+
 
         //InventoryManager.INSTANCE.openContainer(new ContainerPlayerHotbar(null, myInventory));
         InventoryManager.INSTANCE.resetInventoryStatus();
@@ -245,106 +249,130 @@ public class Player : MonoBehaviour
             animator.SetBool("IsDefending",true);
         }
         else{
-            animator.SetBool("IsDefending",false);
+            animator.SetBool("IsDefending", false);
         }
+
 
         //interaction with humans
-        if(SceneManager.GetActiveScene().name=="main")
+        if (SceneManager.GetActiveScene().name == "main")
         {
+            float distanceBetwenPlayerAndHuman = Vector3.Distance(this.transform.position, Human.transform.position);
 
-        float distanceBetwenPlayerAndHuman=Vector3.Distance(this.transform.position,Human.transform.position);
-
-        if (distanceBetwenPlayerAndHuman < 3)
-        {
-            InteractText.SetActive(true);
-            if (triggered == false && Input.GetKey(KeyCode.E))
+            if (distanceBetwenPlayerAndHuman < 3)
             {
-                Cursor.lockState = CursorLockMode.None;
-                CoinSlot.SetActive(true);
-                AddCoinSlotUI();
-                timer = 0.0f;
+                InteractText.SetActive(true);
+                InteractText.GetComponent<Text>().text="Press E to interact";
+                if (triggered == false && Input.GetKey(KeyCode.E))
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    AddCoinSlotUI();
+                    timer = 0.0f;
+                    Debug.Log(counter);
+                    if (hasCoins)
+                    {
+                        dialogueTrigger.TriggerDialogue(hasCoins);
+                        GameObject.Find("2ndLevelLight").GetComponent<Light>().enabled=true;
+                        if (counter == 0)
+                        {
+                            triggered = false;
+                            counter=1;
+                        }
+                        else{
+                            triggered=true;
+                        }
+                    }
+                    else
+                    {
+                        dialogueTrigger.TriggerDialogue();
+                        triggered = true;
+                    }
+                }
+            }
+         
+
+            if(distanceBetwenPlayerAndHuman<3 && triggered)
+            {
+                InteractText.GetComponent<Text>().text="Press E to open Yugi's inventory";
+            }
+
+
+            
+
+
+
+            if (distanceBetwenPlayerAndHuman > 3 && !isPaused && !PlayerCivilInteract.instance.triggered)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                triggered = false;
+                dialogueTrigger.StopDialogue();
+                InteractText.SetActive(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && distanceBetwenPlayerAndHuman < 3 && !dialogueBoxAnimator.GetBool("IsOpen"))
+            {
+
+                hasCoins = UnknownManInventory.INSTANCE.create(hasCoins);
                 if (hasCoins)
                 {
-                    dialogueTrigger.TriggerDialogue(hasCoins);
-                    triggered = true;
+                    triggered = false;
                 }
-                else
-                {
-                    dialogueTrigger.TriggerDialogue();
-                    triggered = true;
-                }
+
             }
-        }
-
-
-        if (distanceBetwenPlayerAndHuman > 3 && !isPaused)
-        {
-        Cursor.lockState = CursorLockMode.Locked;
-            triggered = false;
-            dialogueTrigger.StopDialogue();
-            InteractText.SetActive(false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && distanceBetwenPlayerAndHuman < 3 && !dialogueBoxAnimator.GetBool("IsOpen"))
-        {
-
-            hasCoins = UnknownManInventory.INSTANCE.create(hasCoins);
-            if (hasCoins)
-            {
-                triggered = false;
-            }
-
-        }
         }
 
 
         //opening the main door with the key
-        float distanceBetwenPlayerAndMainDoor = Vector3.Distance(this.transform.position, MainCastleDoor.transform.position);
-
-        if(hasKey())
+        if (SceneManager.GetActiveScene().name == "SecondScene")
         {
-            GameObject.Find("Odobreno").GetComponent<Light>().color=Color.green;
-        }
-        else{
-            GameObject.Find("Odobreno").GetComponent<Light>().color=Color.red;
-        }
 
-        if (distanceBetwenPlayerAndMainDoor < 8 )
-        {
-            InteractText.SetActive(true);
-            if (Input.GetKey(KeyCode.E))
+            float distanceBetwenPlayerAndMainDoor = Vector3.Distance(this.transform.position, MainCastleDoor.transform.position);
+
+            if (hasKey())
             {
-                check=true;
-                if (hasKey())
-                {
-                    decreaseKeyAmount();
-                    //nova scena
-                    Debug.Log("nova scena");
-                }
+                GameObject.Find("Odobreno").GetComponent<Light>().color = Color.green;
+            }
+            else
+            {
+                GameObject.Find("Odobreno").GetComponent<Light>().color = Color.red;
+            }
 
-                else
+            if (distanceBetwenPlayerAndMainDoor < 8)
+            {
+                InteractText.SetActive(true);
+                if (Input.GetKey(KeyCode.E))
                 {
-                    ChangeableInteractText.SetActive(true);
-                    timer = 0;
+                    check = true;
+                    if (hasKey())
+                    {
+                        decreaseKeyAmount();
+                        //nova scena
+                        Debug.Log("nova scena");
+                    }
+
+                    else
+                    {
+                        ChangeableInteractText.SetActive(true);
+                        timer = 0;
+                    }
+                }
+                if (check)
+                {
+                    InteractText.SetActive(false);
                 }
             }
-            if(check)
+            else
             {
                 InteractText.SetActive(false);
+                check = false;
             }
-        }
-        else
-        {
-            // InteractText.SetActive(false);
-            check=false;
-        }
 
 
 
 
-        if (timer > 3)
-        {
-            ChangeableInteractText.SetActive(false);
+            if (timer > 3)
+            {
+                ChangeableInteractText.SetActive(false);
+            }
         }
 
         //interakcija sa chestom
@@ -369,11 +397,19 @@ public class Player : MonoBehaviour
 
 
 
-
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (hasCoins && other.transform.gameObject.name == "2ndLevelCollider")
+        {
+            Time.timeScale=1f;
+            StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
+        }
+    }
     private void AddCoinSlotUI()
     {
+        CoinSlot.SetActive(true);
         int numberOfItems=0;
         foreach (var item in myInventory.getInventoryStacks())
         {
@@ -386,6 +422,11 @@ public class Player : MonoBehaviour
             }
         }
         GameObject.Find("BladeSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
+    }
+
+    private void RemoveCoinSlotUI()
+    {
+        CoinSlot.SetActive(false);
     }
 
     private void CheckForItems()
@@ -530,6 +571,25 @@ public class Player : MonoBehaviour
     {
         GameObject.Instantiate(Blade, BladeSpawnPoint.position, Blade.transform.rotation, BladeContainer);
         bladeThrowAudioSource.Play();
+    }
+    
+    public IEnumerator nextLevel(int index)
+    {
+        animator.SetTrigger("start");
+        yield return new WaitForSeconds(animationTime);
+        SceneManager.LoadScene(index);
+
+    }
+
+    public void RemoveAllInventoryItems()
+    {
+         foreach (var item in myInventory.getInventoryStacks())
+        {
+            if (item.item != null)
+            {
+               item.decreaseAmount(item.count);
+            }
+        }
     }
 
 }

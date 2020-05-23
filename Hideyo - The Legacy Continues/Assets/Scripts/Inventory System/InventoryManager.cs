@@ -6,6 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     #region Singleton
     public static InventoryManager INSTANCE;
+    public bool isDead=false;
 
     private void Awake()
     {

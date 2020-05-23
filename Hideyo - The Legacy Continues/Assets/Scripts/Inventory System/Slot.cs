@@ -71,7 +71,10 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     private void setTooltip(string nameIn)
     {
+        if(nameIn!=null)
+        {
         inventoryManager.drawToolTip(nameIn);
+        }
     }
 
     private void onLeftClick(ItemStack curDraggedStack, ItemStack stackCopy)
@@ -163,11 +166,15 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ItemStack curDraggedStack = inventoryManager.getDraggedItemStack();
-
-        if(!myStack.isEmpty() && curDraggedStack.isEmpty())
+        if (inventoryManager.getDraggedItemStack() != null)
         {
-            setTooltip(myStack.getItem().ItemName);
+            ItemStack curDraggedStack = inventoryManager.getDraggedItemStack();
+
+            if (!myStack.isEmpty() && curDraggedStack.isEmpty())
+            {
+                setTooltip(myStack.getItem().ItemName);
+            }
+
         }
     }
 
