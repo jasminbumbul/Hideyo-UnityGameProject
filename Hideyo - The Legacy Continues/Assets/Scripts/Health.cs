@@ -83,14 +83,14 @@ public class Health : MonoBehaviour
                 {
                     Player.Instance.RemoveAllInventoryItems();
                 }
-                if (SceneManager.GetActiveScene().name == "main")
-                {
+                //if (SceneManager.GetActiveScene().name == "main")
+                //{
                     Invoke("Level1", 3);
-                }
-                if (SceneManager.GetActiveScene().name == "SecondScene")
-                {
-                    Invoke("Level2", 3);
-                }
+                //}
+                //if (SceneManager.GetActiveScene().name == "SecondScene")
+                //{
+                //    Invoke("Level2", 3);
+                //}
                 
             }
             else
@@ -122,10 +122,10 @@ public class Health : MonoBehaviour
     {
         StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
     }
-    private void Level2()
-    {
-        StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
-    }
+    //private void Level2()
+    //{
+    //    StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
+    //}
     private void DestroyObject()
     {
         Destroy(this.gameObject);
