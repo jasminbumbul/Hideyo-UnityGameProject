@@ -115,6 +115,10 @@ public class Health : MonoBehaviour
 
                 }
                 Invoke("DestroyObject", 10);
+                if(this.gameObject.name=="SATOSHI")
+                {
+                    postfight();
+                }
             }
         }
         if (health > Maxhealth)
@@ -128,6 +132,10 @@ public class Health : MonoBehaviour
     }private void Level0()
     {
         StartCoroutine(nextLevel(0));
+    }
+    private void postfight()
+    {
+        StartCoroutine(nextLevel(7));
     }
     //private void Level2()
     //{

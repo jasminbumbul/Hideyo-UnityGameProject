@@ -31,7 +31,6 @@ public class Audio : MonoBehaviour
         }
         if(!cc.isGrounded && !soundHasPlayed)
         {
-        Debug.Log("grounded" +cc.isGrounded);
             jumpingAudioSource.Play();
             soundHasPlayed=true;
             Invoke("landSound",0.6f);

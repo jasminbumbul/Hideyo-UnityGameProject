@@ -47,7 +47,7 @@ public class BladeBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         collided = true;
-        Debug.Log("collided with "+ collision.gameObject.name);
+        // Debug.Log("collided with "+ collision.gameObject.name);
         if(collision.gameObject.tag=="Enemy")
         {
             Destroy(this.gameObject);

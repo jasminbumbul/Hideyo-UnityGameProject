@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
         //InventoryManager.INSTANCE.openContainer(new ContainerPlayerHotbar(null, myInventory));
         InventoryManager.INSTANCE.resetInventoryStatus();
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         instance = this;
     }
 
@@ -111,13 +111,13 @@ public class Player : MonoBehaviour
             openCloseInventoryAudioSource.Play();
             if (!InventoryManager.INSTANCE.hasInventoryCurrentlyOpen())
             {
-                Cursor.lockState = CursorLockMode.None;
+                //Cursor.lockState = CursorLockMode.None;
                 InventoryManager.INSTANCE.openContainer(new ContainerPlayerInventory(null, myInventory));
             }
             else
             {
                 InventoryManager.INSTANCE.closeInventory();
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
             }
         }
 
@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
 
             if (distanceBetwenPlayerAndHuman > 3 && !isPaused && !PlayerCivilInteract.instance.triggered)
             {
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 triggered = false;
                 dialogueTrigger.StopDialogue();
                 InteractText.SetActive(false);
@@ -391,7 +391,12 @@ public class Player : MonoBehaviour
         if(minDistance<4)
         {
             InteractText.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
+        }
+        if(minDistance>4)
+        {
+             InteractText.SetActive(false);
+            // Cursor.lockState = CursorLockMode.Locked;
         }
 
 
@@ -406,6 +411,11 @@ public class Player : MonoBehaviour
             Time.timeScale=1f;
             
             StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
+        }
+
+        if(other.transform.gameObject.name=="Prefightvideocollider")
+        {
+            StartCoroutine(nextLevel(5));
         }
     }
     private void AddCoinSlotUI()
@@ -422,7 +432,8 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        GameObject.Find("BladeSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
+        Debug.Log(numberOfItems);
+        GameObject.Find("CoinSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
     }
 
     private void RemoveCoinSlotUI()
@@ -481,33 +492,38 @@ public class Player : MonoBehaviour
             MedKitSlot.SetActive(false);
         }
 
-        foreach (var item in myInventory.getInventoryStacks())
+        if (SceneManager.GetActiveScene().name == "main")
         {
-            if (item.item != null)
+
+            foreach (var item in myInventory.getInventoryStacks())
             {
-                if (item.item.name == "Coin")
+                if (item.item != null)
                 {
-                      postojiCoin=true;
-                      numberOfItems+=item.count;
+                    if (item.item.name == "Coin")
+                    {
+                        postojiCoin = true;
+                        numberOfItems += item.count;
+                    }
                 }
             }
-        }
-        if(!postojiCoin)
-        {
-            numberOfItems=0;
-        }
-        if( CoinSlot.activeSelf)
-        {
-            GameObject.Find("CoinSlotAmount").GetComponent<Text>().text=numberOfItems.ToString()+"/20";
-            if(numberOfItems>=20)
+            if (!postojiCoin)
             {
-                 GameObject.Find("CoinSlotAmount").GetComponent<Text>().color=Color.green;
+                numberOfItems = 0;
             }
-            else{
-                 GameObject.Find("CoinSlotAmount").GetComponent<Text>().color=Color.red;
+            if (CoinSlot.activeSelf)
+            {
+                GameObject.Find("CoinSlotAmount").GetComponent<Text>().text = numberOfItems.ToString() + "/20";
+                if (numberOfItems >= 20)
+                {
+                    GameObject.Find("CoinSlotAmount").GetComponent<Text>().color = Color.green;
+                }
+                else
+                {
+                    GameObject.Find("CoinSlotAmount").GetComponent<Text>().color = Color.red;
+                }
             }
+
         }
-        
       
     }
 

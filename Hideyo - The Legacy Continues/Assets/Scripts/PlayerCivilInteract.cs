@@ -51,7 +51,7 @@ public class PlayerCivilInteract : MonoBehaviour
             }
             if ((minDistance > 4 && triggered))
             {
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
                 InteractText.SetActive(false);
                 dialogueTrigger.StopDialogue();
                 triggered = false;

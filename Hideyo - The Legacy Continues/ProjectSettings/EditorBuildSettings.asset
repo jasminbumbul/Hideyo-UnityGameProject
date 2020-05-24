@@ -17,4 +17,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ZADNJA_SCENA.unity
     guid: 6a40d24beef969242a5bc99affca4250
+  - enabled: 1
+    path: Assets/Scenes/intro.unity
+    guid: fea2a0e4136ec3f4c94199902fb4ec03
+  - enabled: 1
+    path: Assets/Scenes/prefight.unity
+    guid: 65dda42b1a21d0a4d81a431ee2d52748
+  - enabled: 1
+    path: Assets/Scenes/ZADNJA_SCENA 1.unity
+    guid: 05ce866306b52044da7882a2e4fe203b
+  - enabled: 1
+    path: Assets/Scenes/postfight.unity
+    guid: edbe8b90c5f596d4086ffb06bb4314c2
+  - enabled: 1
+    path: Assets/Scenes/end.unity
+    guid: 183f822a13a409542a57b88d5ba7a650
   m_configObjects: {}
