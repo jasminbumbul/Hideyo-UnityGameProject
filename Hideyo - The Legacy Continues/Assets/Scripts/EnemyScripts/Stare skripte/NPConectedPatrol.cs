@@ -190,12 +190,14 @@ public class NPConectedPatrol : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        
+        try
+        {
+           
+               
             if (!agent.pathPending && agent.remainingDistance <= 3f)
             {
+                //in line 197 we got an error when the enemy dies, but the error disappears after few seconds, it does not affect on the game
 
-
-                //GotoNextPoint();
                 if (patrolWaiting)
                 {
                     waitTimer += Time.deltaTime;
@@ -213,6 +215,13 @@ public class NPConectedPatrol : MonoBehaviour
 
             }
 
+
+        }
+        catch (System.Exception ex)
+        {
+
+            Debug.Log(ex.Message);
         }
     }
+}
 
