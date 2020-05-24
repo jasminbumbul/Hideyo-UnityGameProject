@@ -67,6 +67,10 @@ public class Health : MonoBehaviour
         }
         if (health <= 0)
         {
+            if(this.transform.gameObject.name=="SATOSHI")
+            {
+                Invoke("Level0", 3);
+            }
             if (this.transform.gameObject.name == "HumanModel")
             {
                 playerMovement.enabled=false;
@@ -121,6 +125,9 @@ public class Health : MonoBehaviour
     private void Level1()
     {
         StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex));
+    }private void Level0()
+    {
+        StartCoroutine(nextLevel(0));
     }
     //private void Level2()
     //{
