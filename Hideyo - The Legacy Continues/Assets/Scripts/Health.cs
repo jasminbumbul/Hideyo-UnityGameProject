@@ -112,7 +112,6 @@ public class Health : MonoBehaviour
                 {
                     hasDroppedKey=true;
                     GameObject.Instantiate(Key, ItemSpawnPoint.transform.position, ItemSpawnPoint.transform.rotation, SpawnedItemsContainer);
-
                 }
                 Invoke("DestroyObject", 10);
                 if(this.gameObject.name=="SATOSHI")

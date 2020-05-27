@@ -40,12 +40,30 @@ public class enemy_2_detection : MonoBehaviour
 
             if ((Vector3.Distance(transform.position, player.transform.position) < 20 && (transform.position.y - player.transform.position.y) < 1) && angle < 180)
             {
-                navMeshAgent.speed = 3;
+                if(this.name=="SATOSHI")
+                {
+                navMeshAgent.speed = 7;
+
+                }
+                else
+                {
+                    navMeshAgent.speed = 3;
+
+                }
                 direction.y = 0;
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
                 if (direction.magnitude >= 3)
                 {
-                    navMeshAgent.speed = 5;
+                    if (this.name == "SATOSHI")
+                    {
+                        navMeshAgent.speed = 7;
+
+                    }
+                    else
+                    {
+                        navMeshAgent.speed = 3;
+
+                    }
                     navMeshAgent.destination = player.position;
 
 

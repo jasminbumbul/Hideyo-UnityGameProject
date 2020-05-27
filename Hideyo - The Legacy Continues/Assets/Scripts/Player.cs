@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
     bool hasCoins = false;
     public GameObject InteractText;
     public GameObject ChangeableInteractText;
+    public GameObject ChestInteract;
     float timer = 0.0f;
     Animator dialogueBoxAnimator;
     public GameObject MainCastleDoor;
@@ -60,6 +62,9 @@ public class Player : MonoBehaviour
     private int counter = 0;
 
     public bool isPaused = false;
+
+    private bool chestTriggered = false;
+    private bool invTriggered = false;
   
     private void Awake()
     {
@@ -97,7 +102,7 @@ public class Player : MonoBehaviour
         //InventoryManager.INSTANCE.openContainer(new ContainerPlayerHotbar(null, myInventory));
         InventoryManager.INSTANCE.resetInventoryStatus();
 
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
         instance = this;
     }
 
@@ -111,13 +116,15 @@ public class Player : MonoBehaviour
             openCloseInventoryAudioSource.Play();
             if (!InventoryManager.INSTANCE.hasInventoryCurrentlyOpen())
             {
-                //Cursor.lockState = CursorLockMode.None;
+                invTriggered = true;
+                Cursor.lockState = CursorLockMode.None;
                 InventoryManager.INSTANCE.openContainer(new ContainerPlayerInventory(null, myInventory));
             }
             else
             {
+                invTriggered = false;
+                Cursor.lockState = CursorLockMode.Locked;
                 InventoryManager.INSTANCE.closeInventory();
-                //Cursor.lockState = CursorLockMode.Locked;
             }
         }
 
@@ -210,11 +217,12 @@ public class Player : MonoBehaviour
             {
                 if (item.item != null)
                 {
-                    if (item.item.name == "MedKit" && item.count > 0 && timer>1)
+                    if (item.item.name == "MedKit" && item.count > 0 && timer > 1)
                     {
+                        Debug.Log("daj");
                         HealAudioSource.Play();
                         item.decreaseAmount(1);
-                        Health.instance.health+=50;
+                        Health.instance.health += 50;
                         break;
                     }
                 }
@@ -254,7 +262,7 @@ public class Player : MonoBehaviour
         }
 
 
-        //interaction with humans
+        //interaction with human
         if (SceneManager.GetActiveScene().name == "main")
         {
             float distanceBetwenPlayerAndHuman = Vector3.Distance(this.transform.position, Human.transform.position);
@@ -263,9 +271,9 @@ public class Player : MonoBehaviour
             {
                 InteractText.SetActive(true);
                 InteractText.GetComponent<Text>().text="Press E to interact";
+                Cursor.lockState = CursorLockMode.None;
                 if (triggered == false && Input.GetKey(KeyCode.E))
                 {
-                    Cursor.lockState = CursorLockMode.None;
                     AddCoinSlotUI();
                     timer = 0.0f;
                     Debug.Log(counter);
@@ -301,9 +309,9 @@ public class Player : MonoBehaviour
 
 
 
-            if (distanceBetwenPlayerAndHuman > 3 && !isPaused && !PlayerCivilInteract.instance.triggered)
+            if (distanceBetwenPlayerAndHuman > 3 && !isPaused && !PlayerCivilInteract.instance.triggered && !invTriggered )
             {
-                //Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Locked;
                 triggered = false;
                 dialogueTrigger.StopDialogue();
                 InteractText.SetActive(false);
@@ -374,7 +382,6 @@ public class Player : MonoBehaviour
                 ChangeableInteractText.SetActive(false);
             }
         }
-
         //interakcija sa chestom
         float distance=0f;
         float minDistance=1000f;
@@ -390,13 +397,15 @@ public class Player : MonoBehaviour
 
         if(minDistance<4)
         {
-            InteractText.SetActive(true);
-            //Cursor.lockState = CursorLockMode.None;
+            ChestInteract.SetActive(true);
+            chestTriggered = true;
+            Cursor.lockState = CursorLockMode.None;
         }
-        if(minDistance>4)
+        if(minDistance>4 && chestTriggered )
         {
-             InteractText.SetActive(false);
-            // Cursor.lockState = CursorLockMode.Locked;
+            ChestInteract.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            chestTriggered = false;
         }
 
 
@@ -409,7 +418,7 @@ public class Player : MonoBehaviour
         if (hasCoins && other.transform.gameObject.name == "2ndLevelCollider")
         {
             Time.timeScale=1f;
-            
+            Debug.Log("usao");
             StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex+1));
         }
 
@@ -491,6 +500,7 @@ public class Player : MonoBehaviour
         {
             MedKitSlot.SetActive(false);
         }
+        numberOfItems = 0;
 
         if (SceneManager.GetActiveScene().name == "main")
         {

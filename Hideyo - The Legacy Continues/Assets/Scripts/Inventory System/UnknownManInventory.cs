@@ -55,7 +55,7 @@ public class UnknownManInventory : MonoBehaviour
             if (item.item != null)
             {
 
-                if (item.item.name == "Coin" && item.count >= 15)
+                if (item.item.name == "Coin" && item.count >= 20)
                 {
                     item.decreaseAmount(item.count);
                     return true;
