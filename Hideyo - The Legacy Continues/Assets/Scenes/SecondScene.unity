@@ -62146,8 +62146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea849e3d6a40194a99cebc89a4566c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  Maxhealth: 100
+  health: 250
+  Maxhealth: 250
   heatlhBar: {fileID: 2449235487507644619}
   slider: {fileID: 2449235487507644613}
   transition: {fileID: 1652557271402180689}

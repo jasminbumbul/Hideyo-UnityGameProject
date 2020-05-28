@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
         InventoryManager.INSTANCE.resetInventoryStatus();
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         instance = this;
     }
 
@@ -118,12 +119,14 @@ public class Player : MonoBehaviour
             {
                 invTriggered = true;
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 InventoryManager.INSTANCE.openContainer(new ContainerPlayerInventory(null, myInventory));
             }
             else
             {
                 invTriggered = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 InventoryManager.INSTANCE.closeInventory();
             }
         }
@@ -272,6 +275,7 @@ public class Player : MonoBehaviour
                 InteractText.SetActive(true);
                 InteractText.GetComponent<Text>().text="Press E to interact";
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 if (triggered == false && Input.GetKey(KeyCode.E))
                 {
                     AddCoinSlotUI();
@@ -312,6 +316,7 @@ public class Player : MonoBehaviour
             if (distanceBetwenPlayerAndHuman > 3 && !isPaused && !PlayerCivilInteract.instance.triggered && !invTriggered )
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 triggered = false;
                 dialogueTrigger.StopDialogue();
                 InteractText.SetActive(false);
@@ -400,11 +405,14 @@ public class Player : MonoBehaviour
             ChestInteract.SetActive(true);
             chestTriggered = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         if(minDistance>4 && chestTriggered )
         {
             ChestInteract.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             chestTriggered = false;
         }
 

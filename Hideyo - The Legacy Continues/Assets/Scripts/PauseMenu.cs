@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Player.instance.isPaused = false;
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
                 Resume();
 
@@ -36,6 +37,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -47,6 +49,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void LoadMenu()
     {

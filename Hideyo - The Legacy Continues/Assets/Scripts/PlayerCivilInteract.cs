@@ -45,6 +45,7 @@ public class PlayerCivilInteract : MonoBehaviour
                 if (triggered == false && Input.GetKey(KeyCode.E))
                 {
                     Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                     dialogueTrigger.TriggerDialogue();
                     triggered = true;
                 }

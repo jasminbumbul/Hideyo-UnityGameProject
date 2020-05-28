@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public float animationTime = 1f;
     public void PlayGame()
     {
-        // StartCoroutine(nextLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        //StartCoroutine(nextLevel(3));
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.LoadScene("intro");
     }
