@@ -1,7 +1,7 @@
 # Hideyo-UnityGameProject
 ![coverImage](https://github.com/jasminbumbul/Hideyo-UnityGameProject/blob/master/Hideyo%20-%20The%20Legacy%20Continues/Assets/Textures/CoverImage.png)
-[THIS IS THE GAME PROJECT]  
-Game build : https://github.com/jasminbumbul/Hideyo-GameBuild 
+[THIS IS THE GAME PROJECT]    
+Game build : https://github.com/jasminbumbul/Hideyo-GameBuild   
 Unity version : Unity 2019.3.15f1 (64-bit)
 Full game name : Hideyo-The Legacy Contiunes  
 Creation time : May of 2020  
