@@ -4,7 +4,7 @@
 Game build : https://github.com/jasminbumbul/Hideyo-GameBuild   
 Unity version : Unity 2019.3.15f1 (64-bit)  
 Full game name : Hideyo-The Legacy Contiunes   
-Creation time : May of 2020  
+Creation time : Aprli and May of 2020  
 Game trailer : https://www.youtube.com/watch?v=IOaC6fM99-M  
 This is a game i built together with my friend Admir Numanović [admir.numanovic@edu.fit.ba] for the annual FIT CC competition that is held on the Faculty of Information Technologies in Mostar,BiH  
 
